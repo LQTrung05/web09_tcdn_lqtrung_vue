@@ -1,0 +1,47 @@
+.m-paging{
+    width: calc(100% - 240px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    margin-right: 16px;
+    margin-bottom: 24px;
+    padding: 12px 16px 12px 32px;
+    position: fixed;
+    z-index: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.m-paging-right-page{
+    margin-left: 16px;
+}
+.m-paging .m-paging-right{
+    display: flex;
+    align-items: center;
+    padding-right: 30px;
+}
+.m-paging .m-paging-right .m-paging-right-option select{
+    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    
+}
+.m-paging .m-paging-right-page button{
+    background: none;
+    border: none;
+}
+
+.m-paging .m-paging-right-page button.selected{
+    border: 1px solid #ccc;
+    font-weight: 600px;
+}
+
+.m-btn-before-after{
+    background:none;
+    border: none;
+    
+}

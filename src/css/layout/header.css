@@ -1,0 +1,46 @@
+.header{
+    /* position: fixed; */
+    display: flex;
+    height: 56px;
+    width: calc(100% - 200px);
+    background-color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 200px;
+    right: 0;
+    left: 200px;
+    top: 0;
+    z-index: 1;
+}
+
+.m-logo-icon{
+    height: 32px;
+}
+.header .m-company-name{
+    display: flex;
+}
+.m-company-name .m-header-icon{
+    margin:0 16px;
+}
+.m-company-name .m-branch-name{
+    padding: 4px 0;
+    margin-right: 16px;
+    /* font-weight: 700; */
+    font-family: notosans-bold;
+}
+.m-company-name .m-navbar-icon{
+    margin-top: 4px;
+}
+.m-user-name{
+    display: flex;
+    padding-right: 16px;
+}
+.m-user-image{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.m-user-name .m-user{
+    padding-right: 8px;
+    font-family: notosans-bold;
+}

@@ -1,0 +1,130 @@
+
+.dropdownlist{
+  height: 36px;
+  border-radius: 4px;
+  outline: none;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.dropdownlist__input{
+  flex: 1;
+}
+.dropdownlist__button{
+  justify-content: center;
+  display: flex;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 1px;
+  border: none;
+  border-radius: 4px;
+}
+.dropdownlist__button:hover{
+  background-color: #ccc;
+}
+.dropdownlist__button:active{
+  cursor: pointer;
+}
+.dropdownlist__data{
+  display: none;
+  /* top: 100%; */
+  transition: opacity .1s, transform .1s, width .2s ease;
+  z-index: 10;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #babec5;
+  border-radius: 4px;
+  overflow: hidden;
+  max-height: 200px;
+  width: 100%;
+  padding:8px;
+  box-shadow:-1px 1px 4px 2px rgb(23 27 42 / 24%);
+}
+
+.btn-pagination{
+  justify-content: center;
+  display: flex;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 1px;
+  border: none;
+  border-radius: 4px;
+}
+.btn-pagination:hover{
+  background-color: #ccc;
+}
+.btn-pagination:active{
+  cursor: pointer;
+}
+/* CSS dropdown context menu: xóa, nhân bản,... */
+.function-col{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.function-col__update{
+  cursor: pointer;
+  border: 1px solid none;
+}
+.function-col__menu{
+  cursor: pointer;  
+  position: relative;
+
+}
+.function-col__menu>button:focus.child-multi-choices{
+  border:1px solid #0075C0 ;
+  display: block;
+}
+
+.parent-multi-choices{
+  position: relative;
+}
+.child-multi-choices{
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 2;
+}
+
+.child-multi-choices:hover{
+  display: block;
+}
+.m-chil-dd{
+  padding: 4px;
+}
+.m-chil-dd:hover{
+  background-color: rgba(204, 204, 204, 0.653);
+  color: #409330;
+}
+.m-chil-dd:hover{
+  color: #409330;
+}
+
+.function-col__menu:focus-within .child-multi-choices{
+  display: flex;
+  z-index: 2;
+
+}
+.show-contexMenu{
+  z-index: 2;
+}
+.top-100{
+  top:100%;
+}
+.bottom-100{
+  bottom: 100%;
+}
+
+.numbers-record-in-a-page .data-item{
+  height: 36px;
+}
+.data-item:hover{
+ color: #409330;
+ cursor: pointer;
+}
