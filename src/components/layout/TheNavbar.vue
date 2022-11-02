@@ -2,7 +2,8 @@
   <div class="navbar">
         <div class="nav-logo">
             <div class="sibar"></div>
-            <img class="m-logo-icon" src="../assets/img/Logo_Module_TiengViet_White.66947422.svg" alt="">
+            <img class="m-logo-icon" src="../../assets/img/Logo_Module_TiengViet_White.66947422.svg" alt="">
+            <!-- <img class="m-logo-icon" src= alt=""> -->
         </div>
         <div class="nav-item">
             <a href="" class="m-item-navbar">
@@ -109,5 +110,6 @@ export default {
 }
 </script>
 <style scoped>
+  @import url("../../css/layout/navbar.css");
   
 </style>

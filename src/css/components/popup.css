@@ -112,3 +112,10 @@
     display: none;
 
 }
+.m-form-part-submit {
+    display: flex;
+}
+/* Class đặt cho mục đích sử dụng v-bind class, vì khi đặt tên class có dấu - thì bên vue js sẽ báo lỗi */
+.displayBlock{
+    display: block;
+}

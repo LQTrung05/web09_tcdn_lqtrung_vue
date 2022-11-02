@@ -25,3 +25,17 @@
 
 }
 
+.table-content {
+    background-color: #fff;
+    border-radius: 4px;
+    display: block;
+    margin: 0 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,5 +1,6 @@
 <template>
-    
+  <div class="wrap-table">
+    <table class="m-table" id="listEmployees">
       <thead>
         <tr>
           <th class="text-align-center">
@@ -22,7 +23,7 @@
           <th
             class="text-align-left"
             fieldname="Gender"
-            style="min-width: 129px"
+            style="min-width: 130px"
           >
             Giới tính
           </th>
@@ -80,20 +81,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for ="(item,index) in list" :key="index">
+        <tr v-for="(item, index) in list" :key="index" >
           <td class="text-align-center">
-            <input type="checkbox" name="choose" class="m-input-checkbox"/>
+            <input type="checkbox" name="choose" class="m-input-checkbox" />
           </td>
-          <td class="text-align-left">{{item.EmployeeCode}}</td>
-          <td class="text-align-left">{{item.EmployeeName}}</td>
-          <td class="text-align-left">{{item.DateOfBirth}}</td>
-          <td class="text-align-left">{{item.GenderName}}</td>
-          <td class="text-align-left">{{item.DepartmentName}}</td>
-          <td class="text-align-left">{{item.EmployeePosition}}</td>
-          <td class="text-align-left">{{item.IdentityNumber}} </td>
-          <td class="text-align-left">{{item.BankAccountNumber}}</td>
-          <td class="text-align-left">{{item.BankName}}</td>
-          <td class="text-align-left">{{item.BankBranchName}}</td>
+          <td class="text-align-left">{{ item.EmployeeCode }}</td>
+          <td class="text-align-left">{{ item.EmployeeName }}</td>
+          <td class="text-align-left">{{ item.GenderName }}</td>
+          <td class="text-align-left">{{ formatDateData(item.DateOfBirth) }}</td>
+          <td class="text-align-left">{{ item.IdentityNumber }}</td>
+          <td class="text-align-left">{{ item.EmployeePosition }}</td>
+          <td class="text-align-left">{{ item.DepartmentName }}</td>
+          <td class="text-align-left">{{ item.BankAccountNumber }}</td>
+          <td class="text-align-left">{{ item.BankName }}</td>
+          <td class="text-align-left">{{ item.BankBranchName }}</td>
           <td class="text-align-center show-contexMenu" style="z-index: 2">
             <div class="function-col">
               <div class="function-col__update">
@@ -117,24 +118,45 @@
           </td>
         </tr>
       </tbody>
-    </table><table class="m-table" id="listEmployees">
+    </table>
+  </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "BaseTable",
   props: ["apiUrl"],
   created() {
-    //Lấy dữ liệu về
-    fetch(this.apiUrl)
-    .then(res=>res.json())
-    .then(res=>{this.list = res})
+    const me = this;
+    axios
+      .get(me.apiUrl)
+      .then((response) => {
+        me.list = response.data;
+      })
+      .catch((error) => console.log(error));
+  },
+  // Method định dạng dữ liệu về dạng dd/mm/yy 
+  methods: {
+    formatDateData(value) {
+      if (value) {
+        value = new Date(value);
+        let date = value.getDate();
+        date = date < 10 ? `0${date}` : date;
+        let month = value.getMonth() + 1;
+        month = month < 10 ? `0${month}` : month;
+        let year = value.getFullYear();
+        value = `${date}/${month}/${year}`;
+        return value;
+      }
+    }
   },
   data() {
     return {
-      list:[]
+      list: [],
     };
   }
 };
 </script>
-<style>
+<style scoped>
+  @import url("../../css/components/table.css");
 </style>

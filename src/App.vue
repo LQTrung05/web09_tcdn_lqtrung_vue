@@ -5,9 +5,9 @@
 </template>
 
 <script>
-  import TheHeader from './layout/TheHeader.vue'
-  import TheNavbar from './layout/TheNavbar.vue'
-  import TheBody from './layout/TheBody.vue'
+  import TheHeader from './components/layout/TheHeader.vue'
+  import TheNavbar from './components/layout/TheNavbar.vue'
+  import TheBody from './components/layout/TheBody.vue'
 export default {
   name: 'App',
   components: {

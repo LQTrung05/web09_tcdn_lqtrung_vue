@@ -1,21 +1,13 @@
-@import url(./components/button.css);
+/* @import url(./components/button.css); */
 @import url(./components/input.css);
 @import url(./components/icon.css);
-@import url(./components/table.css);
-@import url(./components/paging.css);
+/* @import url(./components/table.css); */
+/* @import url(./components/paging.css); */
 @import url(./components/dialog.css);
 @import url(./components/search.css);
-@import url(./components/popup.css);
+/* @import url(./components/popup.css); */
 @import url(./components/dropdown.css);
-/* @import url(./components/loading.css); */
 @import url(./components/loading.css);
-/* Layout */
-/* @import url(./layout/header.css);
-@import url(./layout/navbar.css); */
-/* @import url(./layout/content.css); */
-@import url(./layout/header.css);
-@import url(./layout/navbar.css);
-@import url(./layout/body.css);
 @font-face {
     font-family:notosans-bold ;
     src: url(../assets/fonts/notosans-bold.3ede5aff.woff2);

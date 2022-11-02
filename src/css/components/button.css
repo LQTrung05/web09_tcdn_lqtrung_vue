@@ -16,7 +16,6 @@
 }
 .m-button:disabled{
     opacity:0.56;
-
 }
 .m-btn{
     height: 36px;
@@ -30,8 +29,8 @@
 }
 .m-btn:hover{
     cursor: pointer;
-    outline: 1px solid #e2e2e2;
-    background-color: #ccc;
+    outline: 1px solid #e2e2e2 !important;
+    background-color: #ccc !important;
 }
 
 .btn-icon{

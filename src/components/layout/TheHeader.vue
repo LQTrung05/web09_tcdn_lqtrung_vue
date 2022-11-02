@@ -7,7 +7,7 @@
         </div>
         <div class="m-user-name">
             <div class="m-navbar-icon align-seft-center m-icon-24 m-mr-24 m-icon-bell"></div>
-            <img class="m-user-image " src="../assets/img/default-avatar.jpg" alt="User image">
+            <img class="m-user-image " src="../../assets/img/default-avatar.jpg" alt="User image">
 
             <div class="m-user align-seft-center"> Nguyễn Văn Mạnh</div>
             <div class="m-navbar-icon align-seft-center m-icon-14 m-icon-chevron-down"></div>
@@ -31,5 +31,5 @@ export default {
 }
 </script>
 <style scoped>
-
+  @import url("../../css/layout/header.css");
 </style>
