@@ -1,6 +1,6 @@
 .m-popup{
     /* fixed nghĩa là nó không phục thuộc vào thằng nào cả */
-    display: none;
+    /* display: none; */
     position: fixed;
     top: 0;
     left: 0;
@@ -109,7 +109,7 @@
     padding-top: 8px;
     color:#E61D1D;
     position: absolute;
-    display: none;
+    /* display: none; */
 
 }
 .m-form-part-submit {
@@ -118,4 +118,7 @@
 /* Class đặt cho mục đích sử dụng v-bind class, vì khi đặt tên class có dấu - thì bên vue js sẽ báo lỗi */
 .displayBlock{
     display: block;
+}
+.m-form-part-save{
+    margin-right: 8px;
 }

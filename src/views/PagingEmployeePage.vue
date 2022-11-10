@@ -9,13 +9,13 @@
             type="text"
             value="10 bảng ghi 1 trang"
           />
-          <button class="btn-pagination" id="btn-">
-            <div
+          <button class="btn-pagination" @click="toggleList" >
+            <div 
               class="m-icon-arrow-dropdown m-icon-16"
               style="align-self: center"
             ></div>
           </button>
-          <div class="dropdownlist__data numbers-record-in-a-page bottom-100">
+          <div  v-if="isShowList" class="dropdownlist__data numbers-record-in-a-page bottom-100">
             <div class="data-item">10 bản ghi 1 trang</div>
             <div class="data-item">20 bản ghi 1 trang</div>
             <div class="data-item">30 bản ghi 1 trang</div>
@@ -36,7 +36,16 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      isShowList:false
+    }
+  },
+  methods:{
+    toggleList(){
+      this.isShowList = !this.isShowList;
+    }
+  }
 };
 </script>
 <style scoped>

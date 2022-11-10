@@ -1,19 +1,25 @@
 <template>
+  <div>
     <the-header></the-header>
     <the-navbar></the-navbar>
     <the-body></the-body>
+    
+  </div>
 </template>
 
 <script>
-  import TheHeader from './components/layout/TheHeader.vue'
-  import TheNavbar from './components/layout/TheNavbar.vue'
-  import TheBody from './components/layout/TheBody.vue'
+import TheHeader from "./components/layout/TheHeader.vue";
+import TheNavbar from "./components/layout/TheNavbar.vue";
+import TheBody from "./components/layout/TheBody.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TheHeader, TheNavbar, TheBody
-  }
-}
+    TheHeader,
+    TheNavbar,
+    TheBody,
+  },
+  
+};
 </script>
 
 <style>

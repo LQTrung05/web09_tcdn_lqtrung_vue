@@ -81,7 +81,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in list" :key="index" >
+        <tr v-for="(item, index) in employees" :key="index" @dblclick="openDetailFormEmployee(item)" >
           <td class="text-align-center">
             <input type="checkbox" name="choose" class="m-input-checkbox" />
           </td>
@@ -98,7 +98,7 @@
           <td class="text-align-center show-contexMenu" style="z-index: 2">
             <div class="function-col">
               <div class="function-col__update">
-                <button class="btn-edit-epl" data-id="${employeeCode}">
+                <button class="btn-edit-epl" data-id="${employeeCode}" @click="openDetailFormEmployee(item)">
                   Sửa
                 </button>
               </div>
@@ -108,9 +108,7 @@
                 </button>
                 <div class="child-multi-choices" style="min-width: 120px">
                   <div class="duplication m-chil-dd">Nhân bản</div>
-                  <div class="delete-epl m-chil-dd" data-id="${employeeCode}">
-                    Xóa
-                  </div>
+                  <div class="delete-epl m-chil-dd" @click="confirmDeleteEmployee(item)">Xóa</div>
                   <div class="pause m-chil-dd">Ngưng sử dụng</div>
                 </div>
               </div>
@@ -122,21 +120,30 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import formMode from '@/enums/formMode';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: "BaseTable",
-  props: ["apiUrl"],
   created() {
-    const me = this;
-    axios
-      .get(me.apiUrl)
-      .then((response) => {
-        me.list = response.data;
-      })
-      .catch((error) => console.log(error));
+    this.getEmployees();
   },
-  // Method định dạng dữ liệu về dạng dd/mm/yy 
+  computed: mapState({
+    employees:(state)=>state.employees,
+    employee:(state)=>state.employee,
+  }),
   methods: {
+    ...mapActions(["getEmployees"]),
+    ...mapActions(["setDetailEmployee"]),
+    ...mapActions(["toggleForm"]),
+    ...mapActions(["setTitleForm"]),
+    ...mapActions(["setFormMode"]),
+    ...mapActions(["toggleAlert"]),   
+    ...mapActions(["setAlert"]), 
+    /**
+     * Hàm định dạng dữ liệu ngày tháng về dạng dd/mm/yy
+     * @param value Ngày tháng nhập vào
+     * Author: LQTrung (5/11/2022)
+     */
     formatDateData(value) {
       if (value) {
         value = new Date(value);
@@ -148,11 +155,41 @@ export default {
         value = `${date}/${month}/${year}`;
         return value;
       }
-    }
+    },
+    /**
+     * Mở form chi tiết nhân viên
+     * @param item nhân viên được chọn
+     * Author: LQTrung (5/11/2022)
+     */
+    openDetailFormEmployee(item){
+        const me = this;
+        me.setDetailEmployee(item);
+        me.setTitleForm("Thông tin chi tiết nhân viên");
+        me.toggleForm();
+        me.setFormMode(formMode.update);
+    },
+    /**
+     * Hàm xác nhận xóa nhân viên được chọn
+     * @param employee nhân viên muốn xóa
+     * Author: LQTrung (5/11/2022)
+     */
+    confirmDeleteEmployee(employee){
+      const me = this;
+      me.alert = {
+          type:"confirmDelete",
+          message:`Bạn có thực sự muốn xóa nhân viên <${employee.EmployeeCode}> không?`
+      } 
+      me.setDetailEmployee(employee);
+      me.setAlert(me.alert);
+      me.toggleAlert();
+    },
   },
   data() {
     return {
-      list: [],
+      alert:{
+        type:"",
+        message:""
+      }
     };
   }
 };

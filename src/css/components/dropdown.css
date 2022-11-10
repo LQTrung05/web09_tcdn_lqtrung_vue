@@ -27,7 +27,7 @@
   cursor: pointer;
 }
 .dropdownlist__data{
-  display: none;
+  display: block;
   /* top: 100%; */
   transition: opacity .1s, transform .1s, width .2s ease;
   z-index: 10;
@@ -121,10 +121,12 @@
   bottom: 100%;
 }
 
-.numbers-record-in-a-page .data-item{
+.data-item{
   height: 36px;
+  padding-left: 8px;
+  line-height: 36px;
 }
 .data-item:hover{
- color: #409330;
+ background-color: rgba(80,184,60,0.1);
  cursor: pointer;
 }

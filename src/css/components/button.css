@@ -6,32 +6,37 @@
     padding: 0 16px;
     color: #fff;
     background-color: #50B83C;
+    font-family: notosans-simidbold;
 }
 .m-button:hover:not([disabled]){
     background-color: #73C663;
     cursor: pointer;
 }
-.m-button:focus{
+/* .m-button:focus{
     background-color: #409330;
-}
+} */
 .m-button:disabled{
     opacity:0.56;
 }
 .m-btn{
     height: 36px;
     border-radius: 4px;
-    border: 1px solid #000;
+    border: 1px solid rgba(204, 204, 204, 0.59);
     background-color: #fff;
     padding: 0 16px;
     color: #000;
-    margin-right: 8px;
-    font-family: notosans-bold;
+    font-family: notosans-simidbold;
+    width: 100%;
 }
 .m-btn:hover{
     cursor: pointer;
     outline: 1px solid #e2e2e2 !important;
-    background-color: #ccc !important;
+    background-color: #E0E0E0 !important;
 }
+/* .m-btn:focus{
+    cursor: pointer;
+    background-color: #BDBDBD;
+} */
 
 .btn-icon{
     background-image: url(../../assets/img/Sprites.64af8f61.svg);

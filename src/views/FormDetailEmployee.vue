@@ -1,9 +1,9 @@
 <template>
-  <div class="m-popup" :class="{displayBlock:isShow }">
+  <div class="m-popup">
     <div class="m-popup-content">
       <div class="popup-header">
         <div class="popup-title">
-          <div class="popup-title-name"></div>
+          <div class="popup-title-name">{{ titleForm }}</div>
           <label class="m-popup-checkbox display-f">
             <input
               type="checkbox"
@@ -42,14 +42,17 @@
                   </div>
                   <input
                     type="text"
+                    ref="focusMe" 
                     class="m-input-form required"
-                    name="EmployeeCode"
+                    v-model="employee.EmployeeCode"
+                    :class="{ 'm-input-form-error': errorInput.employeeCode }"
                     maxlength="25"
-                    propName="EmployeeCode"
-                    id="employeeCode"
+                    
                     tabindex="3"
                   />
-                  <div class="err-message err-id-employee"></div>
+                  <div class="err-message err-id-employee">
+                    {{ errorInput.employeeCode }}
+                  </div>
                 </div>
                 <div class="m-input-form-60 m-mb-24">
                   <div class="display-f m-mb-8">
@@ -59,13 +62,14 @@
                   <input
                     type="text"
                     class="m-input-form required"
-                    name="EmployeeName"
+                    v-model="employee.EmployeeName"
+                    :class="{ 'm-input-form-error': errorInput.employeeName }"
                     maxlength="128"
                     id="employeeName"
                     propName="EmployeeName"
                     tabindex="4"
                   />
-                  <div class="err-message"></div>
+                  <div class="err-message">{{ errorInput.employeeName }}</div>
                 </div>
               </div>
             </div>
@@ -78,12 +82,13 @@
                   <input
                     type="date"
                     class="m-input-form"
-                    name="DateOfBirth"
+                    v-model="employee.DateOfBirth"
+                    :class="{ 'm-input-form-error': errorInput.dateOfBirth }"
                     id="dateOB"
                     propName="DateOfBirth"
                     tabindex="5"
                   />
-                  <div class="err-message">Không để trống</div>
+                  <div class="err-message">{{ errorInput.dateOfBirth }}</div>
                 </div>
                 <div class="m-input-form-60 m-mb-24">
                   <div class="m-mb-8">
@@ -94,9 +99,9 @@
                       <input
                         type="radio"
                         class="m-input-radio"
-                        value="1"
                         name="Gender"
-                        checked
+                        v-model="employee.Gender"
+                        value="1"
                         id="rdMale"
                         tabindex="6"
                       />
@@ -106,9 +111,10 @@
                       <input
                         type="radio"
                         class="m-input-radio"
-                        value="0"
                         id="rdFemale"
                         name="Gender"
+                        value="0"
+                        v-model="employee.Gender"
                         tabindex="6"
                       />
                       <span class="m-radio-label">Nữ</span>
@@ -117,8 +123,9 @@
                       <input
                         type="radio"
                         class="m-input-radio"
-                        value="0"
                         name="Gender"
+                        value="2"
+                        v-model="employee.Gender"
                         id="rdOther"
                         tabindex="6"
                       />
@@ -139,18 +146,14 @@
 
                 <div class="dropdownlist dropdown-department">
                   <input
-                    type="hidden"
-                    name="DepartmentId"
-                    id="departmentID"
-                    propName="DepartmentId"
-                  />
-                  <input
                     class="input dropdownlist__input required"
                     name="DepartmentName"
                     tabindex="7"
                     readonly="true"
                     id="departmentName"
                     propName="DepartmentName"
+                    v-model="employee.DepartmentName"
+                    :class="{ 'm-input-form-error': errorInput.departmentId }"
                     type="text"
                   />
 
@@ -158,21 +161,27 @@
                     class="dropdownlist__button btn-department"
                     id="btn-"
                     tabindex="8"
+                    @click="toggleList"
                   >
                     <div
                       class="m-icon-arrow-dropdown m-icon-16"
                       style="margin: 0 auto; align-self: center"
                     ></div>
                   </div>
-                  <div class="dropdownlist__data top-100 dropdown-department">
-                    <div class="m-combo-menu-content">
-                      <table class="m-menu-table">
-                        <tbody class="m-menu-items m-departments-list"></tbody>
-                      </table>
+                  <div
+                    class="dropdownlist__data top-100 dropdown-department"
+                    v-if="isShowList"
+                  >
+                    <div v-for="(item, index) in departments" :key="index">
+                      <div class="data-item" @click="chooseDepartment(item)">
+                        {{ item.DepartmentName }}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="err-message err-department-not-null"></div>
+                <div class="err-message err-department-not-null">
+                  {{ errorInput.departmentId }}
+                </div>
               </div>
               <div class="m-input-form-100 m-mb-24">
                 <div class="m-mb-8">
@@ -184,6 +193,7 @@
                   name="EmployeePosition"
                   id="position"
                   maxlength="128"
+                  v-model="employee.EmployeePosition"
                   propName="EmployeePosition"
                   tabindex="11"
                 />
@@ -203,6 +213,7 @@
                     class="m-input-form"
                     name="IdentityNumber"
                     id="identityNumber"
+                    v-model="employee.IdentityNumber"
                     maxlength="20"
                     propName="IdentityNumber"
                     tabindex="9"
@@ -218,10 +229,12 @@
                     class="m-input-form"
                     name="IdentityDate"
                     id="identityDate"
+                    v-model="employee.IdentityDate"
+                    :class="{ 'm-input-form-error': errorInput.identityDate }"
                     propName="IdentityDate"
                     tabindex="10"
                   />
-                  <div class="err-message"></div>
+                  <div class="err-message">{{ errorInput.identityDate }}</div>
                 </div>
               </div>
               <div class="m-input-form-100 m-mb-24">
@@ -234,9 +247,10 @@
                   name="IdentityPlace"
                   id="identityPlace"
                   propName="IdentityPlace"
+                  v-model="employee.IdentityPlace"
                   tabindex="12"
                 />
-                <div class="err-message">Không để trống</div>
+                <div class="err-message"></div>
               </div>
             </div>
           </div>
@@ -250,10 +264,11 @@
                 class="m-input-form m-input-form-100"
                 name="Address"
                 propName="Address"
+                v-model="employee.Address"
                 id="address"
                 tabindex="13"
               />
-              <div class="err-message">Không để trống</div>
+              <div class="err-message"></div>
             </div>
           </div>
 
@@ -268,11 +283,12 @@
                 type="text"
                 class="m-input-form"
                 name="TelephoneNumber"
+                v-model="employee.TelephoneNumber"
                 id="telephoneNumber"
                 propName="TelephoneNumber"
                 tabindex="14"
               />
-              <div class="err-message">Không để trống</div>
+              <div class="err-message"></div>
             </div>
 
             <div class="m-input-form-33 m-pr-6">
@@ -285,11 +301,12 @@
                 type="text"
                 class="m-input-form"
                 name="PhoneNumber"
+                v-model="employee.PhoneNumber"
                 id="phoneNumber"
                 propName="PhoneNumber"
                 tabindex="15"
               />
-              <div class="err-message">Không để trống</div>
+              <div class="err-message"></div>
             </div>
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
@@ -300,10 +317,12 @@
                 id="emailEmployee"
                 class="m-input-form"
                 name="Email"
+                v-model="employee.Email"
+                :class="{ 'm-input-form-error': errorInput.emailEmployee }"
                 propName="Email"
                 tabindex="16"
               />
-              <div class="err-message"></div>
+              <div class="err-message">{{ errorInput.emailEmployee }}</div>
             </div>
           </div>
 
@@ -317,6 +336,7 @@
                 class="m-input-form"
                 name="BankAccountNumber"
                 id="bankAccount"
+                v-model="employee.BankAccountNumber"
                 propName="BankAccountNumber"
                 tabindex="17"
               />
@@ -330,11 +350,12 @@
                 type="text"
                 class="m-input-form"
                 id="bankName"
+                v-model="employee.BankName"
                 name="BankName"
                 propName="BankName"
                 tabindex="18"
               />
-              <div class="err-message">Không để trống</div>
+              <div class="err-message"></div>
             </div>
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
@@ -344,22 +365,38 @@
                 type="text"
                 class="m-input-form"
                 id="bankBranch"
+                v-model="employee.BankBranchName"
                 name="BankBranchName"
                 propName="BankBranchName"
                 tabindex="19"
               />
-              <div class="err-message">Không để trống</div>
+              <div class="err-message"></div>
             </div>
           </div>
 
           <div class="m-form-footer">
             <div class="m-form-part-cancel">
-              <Button btnText="Hủy" addClass="m-btn" @click.prevent="closeFormEmployee" tabindex="22"></Button>
+              <Button
+                btnText="Hủy"
+                addClass="m-btn"
+                @click="toggleForm"
+                tabindex="22"
+              ></Button>
             </div>
             <div class="m-form-part-submit">
-              <Button btnText="Cất" addClass="m-btn" tabindex="21"></Button>
-
-              <Button btnText="Cất và thêm" tabindex="20"></Button>
+              <div class="m-form-part-save">
+                <Button
+                  btnText="Cất"
+                  addClass="m-btn"
+                  tabindex="21"
+                  @click.prevent="save"
+                ></Button>
+              </div>
+              <Button
+                btnText="Cất và thêm"
+                tabindex="20"
+                @click.prevent="saveAndReset"
+              ></Button>
             </div>
           </div>
         </form>
@@ -369,25 +406,310 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import Button from "../components/base/BaseButton.vue";
+import axios from "axios";
+import formMode from "@/enums/formMode";
+import Gender from "../enums/gender";
+
+// const me = this;
 export default {
   name: "PopupDetailEmployee",
-  props:['isShow'],
   components: {
-    Button
+    Button,
+  },
+  created() {
+    this.getDepartments();
+  },
+  mounted() {
+    //focus vào ô Mã nhân viên
+    this.$refs.focusMe.focus()
   },
   data() {
     return {
-      isClose:false
-    }
+      isShowList: false,
+      errorInput: {
+        employeeCode: "",
+        employeeName: "",
+        departmentId: "",
+        dateOfBirth: "",
+        emailEmployee: "",
+        identityDate: "",
+      },
+      department: {
+        departmentId: "",
+        departmentName: "",
+      },
+      alert: {
+        type: "",
+        message: "",
+      },
+    };
   },
+  
+  computed: mapState({
+    isShowForm: (state) => state.isShowForm,
+    departments: (state) => state.departments,
+    titleForm: (state) => state.titleForm,
+    employee: (state) => state.employee,
+    formMode: (state) => state.formMode,
+    alert: (state) => state.alert,
+  }),
   methods: {
+    ...mapActions(["toggleForm"]),
+    ...mapActions(["toggleProgressLoading"]),
+    ...mapActions(["toggleNoticeMessage"]),
+    ...mapActions(["toggleAlert"]),
+    ...mapActions(["getEmployees"]),
+    ...mapActions(["getDepartments"]),
+    ...mapActions(["setTitleNotice"]),
+    ...mapActions(["setDetailEmployee"]),
+    ...mapActions(["setFormMode"]),
+    ...mapActions(["setAlert"]),
+
     /**
-     * Hàm đóng form chi tiết nhân viên
+     * Hàm đóng, mở danh sách đơn vị
      * Author: LQTrung (1/11/2022)
      */
-    closeFormEmployee() {
-       this.$emit("showFormEmployee",false);
+    toggleList() {
+      this.isShowList = !this.isShowList;
+    },
+
+    /**
+     * Hàm chọn tên đơn vị trong dropdownlist
+     * @param {departmentIsChoose} phòng ban được chọn
+     * Author: LQTrung (4/11/2022)
+     */
+    chooseDepartment(departmentIsChoosed) {
+      const me = this;
+      me.employee.DepartmentId = departmentIsChoosed.DepartmentId;
+      me.employee.DepartmentName = departmentIsChoosed.DepartmentName;
+      me.isShowList = false;
+    },
+
+    /**
+     * Hàm validate mã nhân viên
+     * Author: LQTrung (4/11/2022)
+     */
+    validateEmployeeCode() {
+      const me = this;
+      //Validate mã nhân viên
+      // let regex = /NV[0-9]{1,n}$/;
+      if (!me.employee.EmployeeCode)
+        me.errorInput.employeeCode = "Mã không để trống";
+      // else if (!regex.exec(me.employee.EmployeeCode))
+      //   me.errorInput.employeeCode = "Mã phải là NV + số";
+    },
+
+    /**
+     * Hàm validate các trường kiểu date
+     * @param: value
+     * Author: LQTrung (4/11/2022)
+     */
+    validateDateTime(value, titleInput) {
+      let dateTime = new Date(value);
+      let errorMessage = "";
+      if (dateTime > new Date()) {
+        errorMessage = titleInput + " không lớn hơn ngày hiện tại";
+      }
+      return errorMessage;
+    },
+    /**
+     * Hàm validate email đúng định dạng
+     * Author: LQTrung (4/11/2022)
+     */
+    validateEmail(value) {
+      //Dòng code bên dưới (dòng 518) không phải là comment, phải có dòng này thì regexEmail mới dùng được, bỏ đi sẽ xuất hiện 2 lỗi
+      /* eslint-disable no-useless-escape */
+      let errorMessage = "";
+      let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!regexEmail.exec(value)) errorMessage = "Email sai định dạng";
+      if (!value) errorMessage = "";
+      return errorMessage;
+    },
+
+    /**
+     * Hàm validate dữ liệu nhâp vào form
+     * Author: LQTrung (4/11/2022)
+     */
+    validateForm() {
+      const me = this;
+      me.errorInput = {
+        employeeCode: "",
+        employeeName: "",
+        departmentId: "",
+        dateOfBirth: "",
+        emailEmployee: "",
+        identityDate: "",
+      };
+      this.validateEmployeeCode();
+
+      //Validate tên nhân viên
+      if (!me.employee.EmployeeName) {
+        me.errorInput.employeeName = "Tên không để trống";
+      }
+      //Validate phòng ban
+      if (!me.employee.DepartmentId) {
+        me.errorInput.departmentId = "Đơn vị không để trống";
+      }
+      //Validate ngày sinh
+      me.errorInput.dateOfBirth = this.validateDateTime(
+        me.employee.DateOfBirth,
+        "Ngày sinh"
+      );
+      //Validate ngày cấp
+      me.errorInput.identityDate = this.validateDateTime(
+        me.employee.IdentityDate,
+        "Ngày cấp"
+      );
+      //Validate Email phải đúng định dạng
+      me.errorInput.emailEmployee = this.validateEmail(me.employee.Email);
+      if (
+        me.errorInput.employeeCode ||
+        me.errorInput.employeeName ||
+        me.errorInput.departmentId ||
+        me.errorInput.dateOfBirth ||
+        me.errorInput.identityDate ||
+        me.errorInput.emailEmployee
+      )
+        return false;
+      //Nếu validate đúng hết thì trả về true để phục vụ quá trình thêm mới
+      return true;
+    },
+
+    /**
+     * Hàm kích nút "Cất" để thêm mới hoặc sửa và đóng form sau khi xong
+     * Author: LQTrung(8/11/2022)
+     */
+    save() {
+      // trước khi lưu thì validate dữ liệu
+      const me = this;
+      let isValid = me.validateForm();
+      if (isValid) {
+        if (me.formMode == formMode.insert) me.insertEmployee(me.employee);
+        else if (me.formMode == formMode.update) {
+          me.updateEmployee(me.employee);
+        }
+      }
+    },
+
+    /**
+     * Hàm kích nút "Cất và thêm" để thêm mới hoặc sửa và reset form để tiếp tục thêm mới
+     * Author: LQTrung(8/11/2022)
+     */
+    saveAndReset() {
+      const me = this;
+      let isValid = me.validateForm();
+      if (me.formMode == formMode.update) me.setFormMode(formMode.updateAndAdd);
+      else me.setFormMode(formMode.insertAndAdd);
+      if (isValid) {
+        if (me.formMode == formMode.insertAndAdd) {
+          me.insertEmployee(me.employee);
+        } else if (me.formMode == formMode.updateAndAdd) {
+          me.updateEmployee(me.employee);
+        }
+      }
+    },
+
+    /**
+     * Hàm thêm mới nhân viên
+     * @param {object} employee nhân viên được thêm mới
+     * Author: LQTrung (09/11/2022)
+     */
+    insertEmployee(employee) {
+      try {
+        const me = this;
+        axios
+          .post("https://amis.manhnv.net/api/v1/Employees", employee)
+          .then(() => {
+            me.toggleProgressLoading();
+            //Load lại dữ liệu
+            me.getEmployees();
+            if (me.formMode == formMode.insert) {
+              //Đóng form
+              me.toggleForm();
+              //Bật nút progress, tự tắt sau 0.5s
+              setTimeout(() => {
+                me.toggleProgressLoading();
+                //Bật thông báo thêm thành công
+                me.toggleNoticeMessage();
+              }, 500);
+            } else if (me.formMode == formMode.insertAndAdd) {
+              setTimeout(() => {
+                me.toggleProgressLoading();
+                //Bật thông báo thêm thành công
+                me.toggleNoticeMessage();
+              }, 500);
+              me.setDetailEmployee({ Gender: Gender.male });
+            }
+            me.setTitleNotice("Thêm nhân viên thành công");
+            setTimeout(() => {
+              me.toggleNoticeMessage();
+            }, 5000);
+          })
+          .catch(() => {
+            let empcode = me.employee.EmployeeCode;
+            me.alert = {
+              type: "danger",
+              message: `Mã nhân viên <${empcode}> tồn tại trong hệ thống, vui lòng kiểm tra lại`,
+            };
+            me.setAlert(me.alert);
+            me.toggleAlert();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * Hàm cập nhật nhân viên
+     * @param {object} employee nhân viên được cập nhật
+     * Author: LQTrung (09/11/2022)
+     */
+    updateEmployee(employee) {
+      try {
+        const me = this;
+        axios
+          .put(
+            `https://amis.manhnv.net/api/v1/Employees/${employee.EmployeeId}`,
+            employee
+          )
+          .then(() => {
+            me.toggleProgressLoading();
+            //Load lại dữ liệu
+            me.getEmployees();
+            if (me.formMode == formMode.update) {
+              //Đóng form
+              me.toggleForm();
+              //Bật nút progress, tự tắt sau 0.5s
+              setTimeout(() => {
+                me.toggleProgressLoading();
+                //Bật thông báo sửa thành công
+                me.toggleNoticeMessage();
+              }, 500);
+            } else if (me.formMode == formMode.updateAndAdd) {
+              setTimeout(() => {
+                me.toggleProgressLoading();
+                me.toggleNoticeMessage();
+              }, 500);
+              me.setDetailEmployee({ Gender: Gender.male });
+            }
+            me.setTitleNotice("Sửa nhân viên thành công");
+            setTimeout(() => {
+              me.toggleNoticeMessage();
+            }, 5000);
+          })
+          .catch(() => {
+            me.alert = {
+              type: "danger",
+              message: `Mã nhân viên <${me.employee.EmployeeCode}> tồn tại trong hệ thống, vui lòng kiểm tra lại`,
+            };
+            me.setAlert(me.alert);
+            me.toggleAlert();
+          });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

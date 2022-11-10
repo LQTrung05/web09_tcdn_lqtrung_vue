@@ -4,11 +4,10 @@
       <div class="page-content-header">
         <div class="page-content-title">Nhân viên</div>
         <div class="page-content-insert-btn">
-          <!-- <button class="m-button btn-add-epl">Thêm mới nhân viên</button> -->
           <Button
             class="btn-add-epl"
             btnText="Thêm mới nhân viên"
-            @click="openFormInsertEmployee"
+            @click="openFormInsert"
           ></Button>
         </div>
       </div>
@@ -16,11 +15,10 @@
         <div class="table-content">
           <div class="header-table">
             <div class="btn-delete-all">
-              <!-- <button class="m-button" id="btn-delete" disabled="">Xóa</button> -->
               <Button
                 class="btn-add-epl"
                 id="btn-delete"
-                btnDisable="true"
+                btnDisable="1"
                 btnText="Xóa"
               ></Button>
             </div>
@@ -33,18 +31,25 @@
                 />
                 <div class="m-icon-16 m-icon-search"></div>
               </div>
-              <div class="m-btn-refresh m-icon-24 m-icon-refresh"></div>
+              <!-- Nút refresh lại dữ liệu -->
+              <div class="m-btn-refresh m-icon-24 m-icon-refresh" @click="refreshData"></div>
             </div>
           </div>
           <!-- Phần bảng danh sách nhân viên -->
-          <EmployeesTable apiUrl="https://amis.manhnv.net/api/v1/Employees" />
+          <EmployeesTable />
           <!-- Phần paging -->
           <Paging />
         </div>
       </div>
     </div>
+    <!-- Phần progress loading -->
+    <ProgressLoading></ProgressLoading>
     <!-- Phần popup form thêm mới nhân viên -->
-    <FormDetailEmployee :isShow="isShowForm" @showFormEmployee ="showDetailEmployee"  />
+    <FormDetailEmployee v-if="isShowForm"/>
+    <!-- Phần thông báo thêm hoặc sửa hoặc xóa thành công -->
+    <Notice></Notice>
+    <!-- Phần Alert cảnh báo  -->
+    <Alert></Alert>
   </div>
 </template>
 <script>
@@ -52,6 +57,11 @@ import Button from "../../components/base/BaseButton.vue";
 import EmployeesTable from "../base/BaseTable.vue";
 import Paging from "../../views/PagingEmployeePage.vue";
 import FormDetailEmployee from "../../views/FormDetailEmployee.vue";
+import Notice from "../../components/base/BaseNotice.vue";
+import ProgressLoading from "../../views/ProgressLoading.vue"
+import Alert from "../../views/AlertDialog.vue"
+import Gender from "../../enums/gender"
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "TheBody",
@@ -60,36 +70,49 @@ export default {
     Paging,
     Button,
     FormDetailEmployee,
+    Notice,
+    ProgressLoading,
+    Alert
   },
-  props: [],
-  created() {
-    fetch("https://amis.manhnv.net/api/v1/Employees")
-      .then((res) => res.json())
-      .then((res) => {
-        this.employees = res;
-      });
-  },
+  computed:mapState({
+    titleForm: (state)=> state.titleForm,
+    isShowForm: (state) => state.isShowForm
+  }),
+  created() {},
   data() {
     return {
       employees: [],
-      isShowForm: false,
     };
   },
   methods: {
+    ...mapActions(["toggleForm"]),
+    ...mapActions(["toggleProgressLoading"]),
+    ...mapActions(["setTitleForm"]),
+    ...mapActions(["setDetailEmployee"]),
+    ...mapActions(["getEmployees"]),
     /**
      * Kích nút "Thêm mới nhân viên" thì mở form thông tin nhân viên
      * Author: LQTrung (1/11/2022)
      */
-    openFormInsertEmployee() {
-      this.showDetailEmployee(true);
-    },
+    openFormInsert() {
+      // Reset lai form roi moi mo ra
+      const me = this;
+      me.toggleProgressLoading();
+      me.setDetailEmployee({Gender:(Gender.male)});
+      setTimeout(() => {
+        me.setTitleForm("Thêm mới nhân viên");
+        me.toggleProgressLoading();
+        me.toggleForm();
+      }, 1000);
 
-    /**
-     * Hàm hiển thị form thông tin nhân viên theo dạng popup
-     * Author: LQTrung (1/11/2022)
-     */
-    showDetailEmployee(isShow) {
-      this.isShowForm = isShow;
+    },
+    refreshData(){
+      const me = this;
+      me.toggleProgressLoading();
+      setTimeout(() => {
+        me.getEmployees();
+        me.toggleProgressLoading();
+      }, 1000);
     },
   },
 };
