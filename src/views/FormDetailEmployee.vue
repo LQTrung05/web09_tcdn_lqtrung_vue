@@ -494,11 +494,11 @@ export default {
     validateEmployeeCode() {
       const me = this;
       //Validate mã nhân viên
-      // let regex = /NV[0-9]{1,n}$/;
+       let regex = /(NV)(\d+)$|(nv)(\d+)$/;
       if (!me.employee.EmployeeCode)
         me.errorInput.employeeCode = "Mã không để trống";
-      // else if (!regex.exec(me.employee.EmployeeCode))
-      //   me.errorInput.employeeCode = "Mã phải là NV + số";
+      else if (!regex.exec(me.employee.EmployeeCode))
+         me.errorInput.employeeCode = "Mã phải là NV + số";
     },
 
     /**
@@ -586,7 +586,8 @@ export default {
       const me = this;
       let isValid = me.validateForm();
       if (isValid) {
-        if (me.formMode == formMode.insert) me.insertEmployee(me.employee);
+        if (me.formMode == formMode.insert) 
+          me.insertEmployee(me.employee);
         else if (me.formMode == formMode.update) {
           me.updateEmployee(me.employee);
         }
@@ -600,7 +601,8 @@ export default {
     saveAndReset() {
       const me = this;
       let isValid = me.validateForm();
-      if (me.formMode == formMode.update) me.setFormMode(formMode.updateAndAdd);
+      if (me.formMode == formMode.update) 
+        me.setFormMode(formMode.updateAndAdd);
       else me.setFormMode(formMode.insertAndAdd);
       if (isValid) {
         if (me.formMode == formMode.insertAndAdd) {
@@ -652,6 +654,7 @@ export default {
             me.alert = {
               type: "danger",
               message: `Mã nhân viên <${empcode}> tồn tại trong hệ thống, vui lòng kiểm tra lại`,
+              // message: error.response.data.userMsg
             };
             me.setAlert(me.alert);
             me.toggleAlert();

@@ -1,9 +1,9 @@
 import axios from 'axios'
+import state from './state'
 export default {
   getEmployees(context) {
     try {
-      axios.get('https://amis.manhnv.net/api/v1/Employees')
-      // axios.get('http://localhost:5258/api/v1/Employees')
+      axios.get('https://amis.manhnv.net/api/v1/Employees/filter',{params:{pageSize: state.filter.pageSize, pageNumber:state.filter.pageNumber,employeeFilter:state.filter.employeeFilter}})
         .then(response => context.commit('getEmployees', response.data))
     } catch (error) {
       console.log(error);
@@ -37,6 +37,9 @@ export default {
   },
   setAlert(context,alert){
     context.commit("setAlert",alert);
+  },
+  setFilter(context,filter){
+    context.commit("setFilter",filter);
   },
   
   // Phần module department

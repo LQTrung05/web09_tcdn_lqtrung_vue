@@ -124,6 +124,8 @@ import formMode from '@/enums/formMode';
 import { mapActions, mapState } from 'vuex';
 export default {
   name: "BaseTable",
+  components:{
+  },
   created() {
     this.getEmployees();
   },
@@ -193,6 +195,8 @@ export default {
     };
   }
 };
+
+
 </script>
 <style scoped>
   @import url("../../css/components/table.css");

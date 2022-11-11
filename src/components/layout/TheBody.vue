@@ -28,6 +28,8 @@
                   type="text"
                   class="m-border-input-search"
                   placeholder="Tìm theo mã, tên nhân viên"
+                  v-model="filter.employeeFilter"
+                  @keyup="searchEmployee"
                 />
                 <div class="m-icon-16 m-icon-search"></div>
               </div>
@@ -47,7 +49,7 @@
     <!-- Phần popup form thêm mới nhân viên -->
     <FormDetailEmployee v-if="isShowForm"/>
     <!-- Phần thông báo thêm hoặc sửa hoặc xóa thành công -->
-    <Notice></Notice>
+    <Notice ></Notice>
     <!-- Phần Alert cảnh báo  -->
     <Alert></Alert>
   </div>
@@ -76,7 +78,8 @@ export default {
   },
   computed:mapState({
     titleForm: (state)=> state.titleForm,
-    isShowForm: (state) => state.isShowForm
+    isShowForm: (state) => state.isShowForm,
+    filter:(state)=>state.filter,
   }),
   created() {},
   data() {
@@ -90,6 +93,7 @@ export default {
     ...mapActions(["setTitleForm"]),
     ...mapActions(["setDetailEmployee"]),
     ...mapActions(["getEmployees"]),
+    ...mapActions(["setFilter"]),
     /**
      * Kích nút "Thêm mới nhân viên" thì mở form thông tin nhân viên
      * Author: LQTrung (1/11/2022)
@@ -106,6 +110,22 @@ export default {
       }, 1000);
 
     },
+    /**
+     * Hàm tìm kiếm nhân viên theo keyword
+     */
+    searchEmployee(){
+            const me = this;
+            me.setFilter({
+                pageSize: me.filter.pageSize,
+                pageNumber: 1,
+                employeeFilter: me.filter.employeeFilter
+            });
+            me.getEmployees();
+        },
+    /**
+     * Hàm load lại dữ liệu
+     * Author: LQTrung(10/11/2022)
+     */
     refreshData(){
       const me = this;
       me.toggleProgressLoading();
@@ -114,6 +134,7 @@ export default {
         me.toggleProgressLoading();
       }, 1000);
     },
+
   },
 };
 </script>

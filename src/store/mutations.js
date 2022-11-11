@@ -1,6 +1,8 @@
 export default {
   getEmployees(state, payload) {
-    state.employees = payload
+    state.employees = payload.Data;
+    state.totalEmployee = payload.TotalRecord;
+    state.totalPage = payload.TotalPage;
     for (const emp of state.employees) {
       if (emp.DateOfBirth) {
         emp.DateOfBirth = emp.DateOfBirth.split('T')[0]
@@ -16,27 +18,30 @@ export default {
   toggleNoticeMessage(state) {
     state.isShowSuccessNotice = !state.isShowSuccessNotice;
   },
-  toggleProgressLoading(state){
-      state.isShowProgress = !state.isShowProgress ;
+  toggleProgressLoading(state) {
+    state.isShowProgress = !state.isShowProgress;
   },
-  toggleAlert(state){
+  toggleAlert(state) {
     state.isShowAlert = !state.isShowAlert;
   },
-  setTitleForm(state,payload){
+  setTitleForm(state, payload) {
     state.titleForm = payload;
   },
   //Gán tiêu đề thêm, sửa, xóa thành công sau khi thực hiện thêm, sửa, xóa thành công
-  setTitleNotice(state,payload){
+  setTitleNotice(state, payload) {
     state.titleNotice = payload;
   },
-  setDetailEmployee(state,payload){
+  setDetailEmployee(state, payload) {
     state.employee = JSON.parse(JSON.stringify(payload));
   },
-  setFormMode(state,payload){
+  setFormMode(state, payload) {
     state.formMode = payload;
   },
-  setAlert(state, payload){
+  setAlert(state, payload) {
     state.alert = payload;
+  },
+  setFilter(state,payload){
+    state.filter = payload;
   },
   // module department
   getDepartments(state, payload) {

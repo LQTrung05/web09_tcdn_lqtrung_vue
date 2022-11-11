@@ -9,7 +9,6 @@
   </div>
 </template>
 <script>
-// import state from '@/store/state'
 import {mapState} from 'vuex'
 export default {
   props:[],
