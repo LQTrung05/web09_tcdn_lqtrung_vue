@@ -21,6 +21,8 @@ export default {
   },
   totalEmployee: 0,
   totalPage: 0,
+  //ID của các nhân viên được chọn
+  idEmployeesSelected:[],
   //Phần module department
   departments: []
 }

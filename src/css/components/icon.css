@@ -37,11 +37,15 @@
     background-image: url(../../assets/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
 }
-
+.m-icon-success-32{
+    background-position: -96px -962px;
+}
 .m-icon-dashboard {
     background-position: -30px -1628px;
 }
-
+.m-icon-excel{
+    background-position: -705px -258px;
+}
 .m-icon-cash {
     background-position: -73px -1628px;
 }
@@ -173,6 +177,11 @@
     height: 100%;
     animation: rotate 1s ease infinite;
 }
-.m-icon-success-32{
-    background-position: -96px -962px;
+.m-icon-excel{
+    margin-left: 12px;
+    margin-top: 4px;
+}
+.m-icon-excel:hover{
+    cursor: pointer;
+    opacity: 60%;
 }

@@ -9,6 +9,7 @@
               type="checkbox"
               class="m-input-checkbox-popup"
               tabindex="1"
+              value="1"
             />
             <span class="m-input-checkbox-label">Là khách hàng</span>
           </label>
@@ -22,7 +23,7 @@
           </label>
         </div>
         <div class="popup-close">
-          <div class="m-icon-24 m-icon-help" style="margin-right: 8px"></div>
+          <div class="m-icon-24 m-icon-help" style="margin-right: 8px" title="Trợ giúp"></div>
           <div
             class="m-icon-24 m-icon-close m-close-add-popup js-close-form"
             title="Đóng (ESC)"
@@ -101,8 +102,8 @@
                         class="m-input-radio"
                         name="Gender"
                         v-model="employee.Gender"
-                        value="1"
-                        id="rdMale"
+                        @change="(e)=>(employee.Gender = parseInt(e.target.value))"
+                        value= 0
                         tabindex="6"
                       />
                       <span class="m-radio-label">Nam</span>
@@ -111,9 +112,9 @@
                       <input
                         type="radio"
                         class="m-input-radio"
-                        id="rdFemale"
                         name="Gender"
-                        value="0"
+                        @change="(e)=>(employee.Gender = parseInt(e.target.value))"
+                        value = 1
                         v-model="employee.Gender"
                         tabindex="6"
                       />
@@ -124,9 +125,9 @@
                         type="radio"
                         class="m-input-radio"
                         name="Gender"
-                        value="2"
+                        @change="(e)=>(employee.Gender = parseInt(e.target.value))"
+                        value= 2
                         v-model="employee.Gender"
-                        id="rdOther"
                         tabindex="6"
                       />
                       <span class="m-radio-label">Khác</span>
@@ -193,7 +194,7 @@
                   name="EmployeePosition"
                   id="position"
                   maxlength="128"
-                  v-model="employee.EmployeePosition"
+                  v-model="employee.PositionName"
                   propName="EmployeePosition"
                   tabindex="11"
                 />
@@ -282,10 +283,10 @@
               <input
                 type="text"
                 class="m-input-form"
-                name="TelephoneNumber"
-                v-model="employee.TelephoneNumber"
-                id="telephoneNumber"
-                propName="TelephoneNumber"
+                name="PhoneNumber"
+                v-model="employee.PhoneNumber"
+                id="phoneNumber"
+                propName="PhoneNumber"
                 tabindex="14"
               />
               <div class="err-message"></div>
@@ -300,10 +301,10 @@
               <input
                 type="text"
                 class="m-input-form"
-                name="PhoneNumber"
-                v-model="employee.PhoneNumber"
-                id="phoneNumber"
-                propName="PhoneNumber"
+                name="LandPhone"
+                v-model="employee.LandPhone"
+                id="landPhone"
+                propName="LandPhone"
                 tabindex="15"
               />
               <div class="err-message"></div>
@@ -406,11 +407,9 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Button from "../components/base/BaseButton.vue";
-import axios from "axios";
-import formMode from "@/enums/formMode";
-import Gender from "../enums/gender";
+import FormMode from "../enums/formMode";
 
 // const me = this;
 export default {
@@ -419,7 +418,11 @@ export default {
     Button,
   },
   created() {
-    this.getDepartments();
+    const me = this;
+    me.getDepartments();
+    if(me.formMode == FormMode.insert){
+            me.getNewEmployeeCode();
+        }
   },
   mounted() {
     //focus vào ô Mã nhân viên
@@ -446,26 +449,31 @@ export default {
       },
     };
   },
-  
-  computed: mapState({
-    isShowForm: (state) => state.isShowForm,
-    departments: (state) => state.departments,
-    titleForm: (state) => state.titleForm,
-    employee: (state) => state.employee,
-    formMode: (state) => state.formMode,
-    alert: (state) => state.alert,
-  }),
+  computed: mapGetters([
+    "isShowForm",
+    "departments",
+    "titleForm",
+    "employee",
+    "formMode",
+    "alert",
+    "newEmployeeCode",
+  ]),
   methods: {
-    ...mapActions(["toggleForm"]),
-    ...mapActions(["toggleProgressLoading"]),
-    ...mapActions(["toggleNoticeMessage"]),
-    ...mapActions(["toggleAlert"]),
-    ...mapActions(["getEmployees"]),
-    ...mapActions(["getDepartments"]),
-    ...mapActions(["setTitleNotice"]),
-    ...mapActions(["setDetailEmployee"]),
-    ...mapActions(["setFormMode"]),
-    ...mapActions(["setAlert"]),
+    ...mapActions([
+        "toggleForm",
+        "toggleProgressLoading",
+        "toggleNoticeMessage",
+        "toggleAlert",
+        "getEmployees",
+        "getDepartments",
+        "setTitleNotice",
+        "setDetailEmployee",
+        "setFormMode",
+        "setAlert",
+        "insertEmployee",
+        "updateEmployee",
+        "getNewEmployeeCode",
+    ]),
 
     /**
      * Hàm đóng, mở danh sách đơn vị
@@ -482,7 +490,7 @@ export default {
      */
     chooseDepartment(departmentIsChoosed) {
       const me = this;
-      me.employee.DepartmentId = departmentIsChoosed.DepartmentId;
+      me.employee.DerpartmentID = departmentIsChoosed.DerpartmentID;
       me.employee.DepartmentName = departmentIsChoosed.DepartmentName;
       me.isShowList = false;
     },
@@ -549,7 +557,7 @@ export default {
         me.errorInput.employeeName = "Tên không để trống";
       }
       //Validate phòng ban
-      if (!me.employee.DepartmentId) {
+      if (!me.employee.DerpartmentID) {
         me.errorInput.departmentId = "Đơn vị không để trống";
       }
       //Validate ngày sinh
@@ -585,10 +593,19 @@ export default {
       // trước khi lưu thì validate dữ liệu
       const me = this;
       let isValid = me.validateForm();
+      //Chuyển về chế độ Cất
+      if(me.formMode == FormMode.insertAndAdd)
+        me.setFormMode(FormMode.insert);
+      else if(me.formMode == FormMode.updateAndAdd)
+        me.setFormMode(FormMode.update);
+
       if (isValid) {
-        if (me.formMode == formMode.insert) 
+        if (me.formMode == FormMode.insert){
+          me.employee.CreatedBy = "LQTrung";
           me.insertEmployee(me.employee);
-        else if (me.formMode == formMode.update) {
+        }
+        else if (me.formMode == FormMode.update) {
+          me.employee.ModifiedBy = "LQTrung";
           me.updateEmployee(me.employee);
         }
       }
@@ -601,119 +618,27 @@ export default {
     saveAndReset() {
       const me = this;
       let isValid = me.validateForm();
-      if (me.formMode == formMode.update) 
-        me.setFormMode(formMode.updateAndAdd);
-      else me.setFormMode(formMode.insertAndAdd);
+      //Chuyển về chết độ Sửa và reset lại form để thêm mới
+      if (me.formMode == FormMode.update) 
+        me.setFormMode(FormMode.updateAndAdd);
+      else me.setFormMode(FormMode.insertAndAdd);
+
       if (isValid) {
-        if (me.formMode == formMode.insertAndAdd) {
+        if (me.formMode == FormMode.insertAndAdd) {
+        
+          me.employee.CreatedBy = "LQTrung";
           me.insertEmployee(me.employee);
-        } else if (me.formMode == formMode.updateAndAdd) {
+        } else if (me.formMode == FormMode.updateAndAdd) {
+          me.employee.ModifiedBy = "LQTrung";
           me.updateEmployee(me.employee);
         }
+
       }
     },
 
-    /**
-     * Hàm thêm mới nhân viên
-     * @param {object} employee nhân viên được thêm mới
-     * Author: LQTrung (09/11/2022)
-     */
-    insertEmployee(employee) {
-      try {
-        const me = this;
-        axios
-          .post("https://amis.manhnv.net/api/v1/Employees", employee)
-          .then(() => {
-            me.toggleProgressLoading();
-            //Load lại dữ liệu
-            me.getEmployees();
-            if (me.formMode == formMode.insert) {
-              //Đóng form
-              me.toggleForm();
-              //Bật nút progress, tự tắt sau 0.5s
-              setTimeout(() => {
-                me.toggleProgressLoading();
-                //Bật thông báo thêm thành công
-                me.toggleNoticeMessage();
-              }, 500);
-            } else if (me.formMode == formMode.insertAndAdd) {
-              setTimeout(() => {
-                me.toggleProgressLoading();
-                //Bật thông báo thêm thành công
-                me.toggleNoticeMessage();
-              }, 500);
-              me.setDetailEmployee({ Gender: Gender.male });
-            }
-            me.setTitleNotice("Thêm nhân viên thành công");
-            setTimeout(() => {
-              me.toggleNoticeMessage();
-            }, 5000);
-          })
-          .catch(() => {
-            let empcode = me.employee.EmployeeCode;
-            me.alert = {
-              type: "danger",
-              message: `Mã nhân viên <${empcode}> tồn tại trong hệ thống, vui lòng kiểm tra lại`,
-              // message: error.response.data.userMsg
-            };
-            me.setAlert(me.alert);
-            me.toggleAlert();
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    
 
-    /**
-     * Hàm cập nhật nhân viên
-     * @param {object} employee nhân viên được cập nhật
-     * Author: LQTrung (09/11/2022)
-     */
-    updateEmployee(employee) {
-      try {
-        const me = this;
-        axios
-          .put(
-            `https://amis.manhnv.net/api/v1/Employees/${employee.EmployeeId}`,
-            employee
-          )
-          .then(() => {
-            me.toggleProgressLoading();
-            //Load lại dữ liệu
-            me.getEmployees();
-            if (me.formMode == formMode.update) {
-              //Đóng form
-              me.toggleForm();
-              //Bật nút progress, tự tắt sau 0.5s
-              setTimeout(() => {
-                me.toggleProgressLoading();
-                //Bật thông báo sửa thành công
-                me.toggleNoticeMessage();
-              }, 500);
-            } else if (me.formMode == formMode.updateAndAdd) {
-              setTimeout(() => {
-                me.toggleProgressLoading();
-                me.toggleNoticeMessage();
-              }, 500);
-              me.setDetailEmployee({ Gender: Gender.male });
-            }
-            me.setTitleNotice("Sửa nhân viên thành công");
-            setTimeout(() => {
-              me.toggleNoticeMessage();
-            }, 5000);
-          })
-          .catch(() => {
-            me.alert = {
-              type: "danger",
-              message: `Mã nhân viên <${me.employee.EmployeeCode}> tồn tại trong hệ thống, vui lòng kiểm tra lại`,
-            };
-            me.setAlert(me.alert);
-            me.toggleAlert();
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    
   },
 };
 </script>

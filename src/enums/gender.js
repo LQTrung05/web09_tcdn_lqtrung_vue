@@ -1,5 +1,5 @@
 export default{
-  male:1,
-  female:0,
+  male:0,
+  female:1,
   other:2
 }

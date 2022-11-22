@@ -1,14 +1,11 @@
 .body{
     background-color: rgba(204, 204, 204, 0.864);
     height: calc(100vh - 56px);
-    /* margin-top: 56px; */
     margin-left: 200px;
     overflow: auto;
 }
 .page-content{
-    
     height: inherit;
-    /* background-color: red; */
 }
 .page-content-header{
     display: flex;

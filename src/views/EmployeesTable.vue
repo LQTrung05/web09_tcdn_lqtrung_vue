@@ -90,15 +90,15 @@
           <td class="text-align-left">{{ item.GenderName }}</td>
           <td class="text-align-left">{{ formatDateData(item.DateOfBirth) }}</td>
           <td class="text-align-left">{{ item.IdentityNumber }}</td>
-          <td class="text-align-left">{{ item.EmployeePosition }}</td>
+          <td class="text-align-left">{{ item.PositionName }}</td>
           <td class="text-align-left">{{ item.DepartmentName }}</td>
           <td class="text-align-left">{{ item.BankAccountNumber }}</td>
           <td class="text-align-left">{{ item.BankName }}</td>
           <td class="text-align-left">{{ item.BankBranchName }}</td>
-          <td class="text-align-center show-contexMenu" style="z-index: 2">
+          <td class="text-align-center show-contexMenu" @dblclick.stop :style="{'z-index': employees.length-index}">
             <div class="function-col">
               <div class="function-col__update">
-                <button class="btn-edit-epl" data-id="${employeeCode}" @click="openDetailFormEmployee(item)">
+                <button class="btn-edit-epl" @click="openDetailFormEmployee(item)">
                   Sửa
                 </button>
               </div>
@@ -120,19 +120,23 @@
   </div>
 </template>
 <script>
-import formMode from '@/enums/formMode';
-import { mapActions, mapState } from 'vuex';
+import formMode from '../enums/formMode';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "BaseTable",
   components:{
   },
   created() {
+    this.toggleProgressLoading();
     this.getEmployees();
+    setTimeout(() => {
+      this.toggleProgressLoading();
+    }, 1000);
   },
-  computed: mapState({
-    employees:(state)=>state.employees,
-    employee:(state)=>state.employee,
-  }),
+  computed: mapGetters([
+    "employees",
+    "employee",
+  ]),
   methods: {
     ...mapActions(["getEmployees"]),
     ...mapActions(["setDetailEmployee"]),
@@ -141,9 +145,11 @@ export default {
     ...mapActions(["setFormMode"]),
     ...mapActions(["toggleAlert"]),   
     ...mapActions(["setAlert"]), 
+    ...mapActions(["toggleProgressLoading"]),
     /**
      * Hàm định dạng dữ liệu ngày tháng về dạng dd/mm/yy
      * @param value Ngày tháng nhập vào
+     * @return Trả về dữ liệu ngày tháng đã chuẩn hóa về dạng dd/mm.yyyy
      * Author: LQTrung (5/11/2022)
      */
     formatDateData(value) {
@@ -195,9 +201,8 @@ export default {
     };
   }
 };
-
-
 </script>
+
 <style scoped>
-  @import url("../../css/components/table.css");
+  @import url("../css/components/table.css");
 </style>

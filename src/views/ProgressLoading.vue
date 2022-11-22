@@ -4,11 +4,11 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  computed:mapState({
-    isShowProgress: (state) =>state.isShowProgress,
-  }),
+  computed:mapGetters([
+    "isShowProgress"
+  ]),
 }
 </script>
 <style scoped>

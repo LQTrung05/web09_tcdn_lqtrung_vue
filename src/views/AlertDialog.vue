@@ -40,16 +40,15 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import { mapState, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import BaseButton from "../components/base/BaseButton.vue";
 export default {
-  computed: mapState({
-    alert: (state) => state.alert,
-    isShowAlert: (state) => state.isShowAlert,
-    employee: (state) => state.employee,
-    titleNotice: (state) => state.titleNotice,
-  }),
+  computed: mapGetters([
+    "alert",
+    "isShowAlert",
+    "employee",
+    "titleNotice",
+  ]),
   components: {
     BaseButton,
   },
@@ -60,32 +59,13 @@ export default {
     ...mapActions(["setTitleNotice"]),
     ...mapActions(["getEmployees"]),
     ...mapActions(["toggleNoticeMessage"]),
+    ...mapActions(["deleteEmployee"]),
+    //Hàm đóng cửa sổ cảnh báo
+    //Athor: LQTrung (1/11/2022)
     closeAlert() {
       this.toggleAlert();
     },
-    deleteEmployee() {
-      console.log(this.employee);
-      axios
-        .delete(
-          `https://amis.manhnv.net/api/v1/Employees/${this.employee.EmployeeId}`
-        )
-        .then(() => {
-          const me = this;
-          me.toggleAlert();
-          me.toggleProgressLoading();
-          //Load lại dữ liệu
-          me.getEmployees();
-          me.setTitleNotice("Xóa thành công");
-          setTimeout(() => {
-            me.toggleProgressLoading();
-            //Bật thông báo sửa thành công
-            me.toggleNoticeMessage();
-          }, 1000);
-          setTimeout(() => {
-            me.toggleNoticeMessage();
-          }, 5000);
-        });
-    },
+    
   },
 };
 </script>

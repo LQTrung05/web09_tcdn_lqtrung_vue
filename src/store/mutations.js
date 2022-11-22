@@ -3,7 +3,7 @@ export default {
     state.employees = payload.Data;
     state.totalEmployee = payload.TotalRecord;
     state.totalPage = payload.TotalPage;
-    for (const emp of state.employees) {
+    for (var emp of state.employees) {
       if (emp.DateOfBirth) {
         emp.DateOfBirth = emp.DateOfBirth.split('T')[0]
       }
@@ -11,6 +11,9 @@ export default {
         emp.IdentityDate = emp.IdentityDate.split('T')[0]
       }
     }
+  },
+  getNewEmployeeCode(state,payload){
+    state.employee.EmployeeCode = payload;
   },
   toggleForm(state) {
     state.isShowForm = !state.isShowForm;
@@ -42,6 +45,12 @@ export default {
   },
   setFilter(state,payload){
     state.filter = payload;
+  },
+  openNotice(state){
+    state.isShowSuccessNotice = true; 
+  },
+  closeNotice(state){
+    state.isShowSuccessNotice = false;
   },
   // module department
   getDepartments(state, payload) {

@@ -1,13 +1,11 @@
 .m-popup{
-    /* fixed nghĩa là nó không phục thuộc vào thằng nào cả */
-    /* display: none; */
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     background-color:rgba(0, 0, 0, 0.596) ;
-    z-index: 3;
+    z-index: 10000;
 
 }
 .m-popup .m-popup-content{

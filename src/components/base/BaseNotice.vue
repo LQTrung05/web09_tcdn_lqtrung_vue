@@ -5,23 +5,24 @@
       <div class="title-success">Thành công!</div>
       <div class="content-success">{{titleNotice}}</div>
     </div>
-    <div class="icon-closs m-icon-close-notice m-icon-16"></div>
+    <div class="icon-closs m-icon-close-notice m-icon-16" @click="closeNotice"></div>
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   props:[],
-  computed:mapState({
-      isShowSuccessNotice:(state)=>state.isShowSuccessNotice,
-      titleNotice: (state)=>state.titleNotice,
-    }),
+  computed:mapGetters([
+      "isShowSuccessNotice",
+      "titleNotice",
+    ]),
   data() {
     return {
     }
   },
   methods:{
-
+    ...mapActions([
+    "closeNotice"])
   }
 };
 </script>

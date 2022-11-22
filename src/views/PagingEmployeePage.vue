@@ -38,16 +38,9 @@
         <button
           :disabled="filter.pageNumber == 1"
           class="m-btn-first"
-          @click="selectFrontPage"
-        >
-          Trước
-        </button>
-        <!-- class=" selected"  -->
-        <!-- <button v-for="(item, index) in 3" :key="index" @click="selectedNumberPage" > {{ item }}</button> -->
+          @click="selectFrontPage">Trước</button>
+          
         <button :class="{'selected': ischoose}">{{filter.pageNumber}}</button>
-        <!-- <button class="">{{filter.pageNumber+1}}</button>
-        <button class="">{{filter.pageNumber+2}}</button> -->
-
         <button
           :disabled="filter.pageNumber == totalPage"
           class="m-btn-last"
@@ -58,13 +51,15 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  computed: mapState({
-    filter: (state) => state.filter,
-    totalEmployee: (state) => state.totalEmployee,
-    totalPage : (state) => state.totalPage,
-  }),
+  computed:{
+      ...mapGetters([
+      "filter",
+      "totalEmployee",
+      "totalPage"
+    ])
+  },
   data() {
     return {
       isShowList: false,

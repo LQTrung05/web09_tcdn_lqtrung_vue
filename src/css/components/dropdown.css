@@ -40,6 +40,7 @@
   width: 100%;
   padding:8px;
   box-shadow:-1px 1px 4px 2px rgb(23 27 42 / 24%);
+  overflow-y: scroll;
 }
 
 .btn-pagination{
