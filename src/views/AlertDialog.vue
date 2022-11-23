@@ -46,20 +46,15 @@ export default {
   computed: mapGetters([
     "alert",
     "isShowAlert",
-    "employee",
-    "titleNotice",
   ]),
   components: {
     BaseButton,
   },
   methods: {
-    ...mapActions(["setAlert"]),
-    ...mapActions(["toggleAlert"]),
-    ...mapActions(["toggleProgressLoading"]),
-    ...mapActions(["setTitleNotice"]),
-    ...mapActions(["getEmployees"]),
-    ...mapActions(["toggleNoticeMessage"]),
-    ...mapActions(["deleteEmployee"]),
+    ...mapActions([   
+        "toggleAlert",
+        "deleteEmployee"
+    ]),
     //Hàm đóng cửa sổ cảnh báo
     //Athor: LQTrung (1/11/2022)
     closeAlert() {

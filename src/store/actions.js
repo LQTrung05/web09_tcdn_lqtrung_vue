@@ -67,12 +67,12 @@ export default {
           }, 5000);
         })
         .catch((res) => {
-          // let empcode = me.employee.EmployeeCode;
-          state.alert = {
+          console.log(res),
+          this.alert = {
             type: "danger",
-            message: res.data.UserMsg,
+            message: res.response.data.Data[0],
           };
-          context.dispatch("setAlert", state.alert);
+          context.dispatch("setAlert", this.alert);
           context.dispatch("toggleAlert");
         });
     } catch (error) {
@@ -117,13 +117,12 @@ export default {
             context.dispatch("closeNotice");
           }, 5000);
         })
-        .catch((response) => {
-          state.alert = {
+        .catch((res) => {
+          this.alert = {
             type: "danger",
-            message: `Mã nhân viên <${state.employee.EmployeeCode}> tồn tại trong hệ thống, vui lòng kiểm tra lại`,
+            message:res.response.data.Data[0],
           };
-          console.log(response);
-          context.dispatch("setAlert",state.alert);
+          context.dispatch("setAlert",this.alert);
           context.dispatch("toggleAlert");
         });
     } catch (error) {
@@ -137,25 +136,29 @@ export default {
    * Author: LQTrung (09/11/2022)
    */
   deleteEmployee(context) {
-    axios
-      .delete(
-        `http://localhost:8080/api/v1/Employees/${state.employee.EmployeeID}`
-      )
-      .then(() => {
-        context.dispatch("toggleAlert");
-        context.dispatch("toggleProgressLoading");
-        //Load lại dữ liệu
-        context.dispatch("getEmployees");
-        context.dispatch("setTitleNotice","Xóa thành công");
-        setTimeout(() => {
+    try {
+      axios
+        .delete(
+          `http://localhost:8080/api/v1/Employees/${state.employee.EmployeeID}`
+        )
+        .then(() => {
+          context.dispatch("toggleAlert");
           context.dispatch("toggleProgressLoading");
-          //Bật thông báo xóa thành công
-          context.dispatch("openNotice");
-        }, 500);
-        setTimeout(() => {
-          context.dispatch("closeNotice");
-        }, 5000);
-      });
+          //Load lại dữ liệu
+          context.dispatch("getEmployees");
+          context.dispatch("setTitleNotice","Xóa thành công");
+          setTimeout(() => {
+            context.dispatch("toggleProgressLoading");
+            //Bật thông báo xóa thành công
+            context.dispatch("openNotice");
+          }, 500);
+          setTimeout(() => {
+            context.dispatch("closeNotice");
+          }, 5000);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   /**

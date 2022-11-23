@@ -1,8 +1,8 @@
 export default {
-  getEmployees(state, payload) {
-    state.employees = payload.Data;
-    state.totalEmployee = payload.TotalRecord;
-    state.totalPage = payload.TotalPage;
+  getEmployees(state, employees) {
+    state.employees = employees.Data;
+    state.totalEmployee = employees.TotalRecord;
+    state.totalPage = employees.TotalPage;
     for (var emp of state.employees) {
       if (emp.DateOfBirth) {
         emp.DateOfBirth = emp.DateOfBirth.split('T')[0]
@@ -12,8 +12,8 @@ export default {
       }
     }
   },
-  getNewEmployeeCode(state,payload){
-    state.employee.EmployeeCode = payload;
+  getNewEmployeeCode(state,employeeCode){
+    state.employee.EmployeeCode = employeeCode;
   },
   toggleForm(state) {
     state.isShowForm = !state.isShowForm;
@@ -27,24 +27,24 @@ export default {
   toggleAlert(state) {
     state.isShowAlert = !state.isShowAlert;
   },
-  setTitleForm(state, payload) {
-    state.titleForm = payload;
+  setTitleForm(state, titleForm) {
+    state.titleForm = titleForm;
   },
   //Gán tiêu đề thêm, sửa, xóa thành công sau khi thực hiện thêm, sửa, xóa thành công
-  setTitleNotice(state, payload) {
-    state.titleNotice = payload;
+  setTitleNotice(state, titleNotice) {
+    state.titleNotice = titleNotice;
   },
-  setDetailEmployee(state, payload) {
-    state.employee = JSON.parse(JSON.stringify(payload));
+  setDetailEmployee(state, employee) {
+    state.employee = JSON.parse(JSON.stringify(employee));
   },
-  setFormMode(state, payload) {
-    state.formMode = payload;
+  setFormMode(state, formMode) {
+    state.formMode = formMode;
   },
-  setAlert(state, payload) {
-    state.alert = payload;
+  setAlert(state, alert) {
+    state.alert = alert;
   },
-  setFilter(state,payload){
-    state.filter = payload;
+  setFilter(state,filter){
+    state.filter = filter;
   },
   openNotice(state){
     state.isShowSuccessNotice = true; 
@@ -53,7 +53,7 @@ export default {
     state.isShowSuccessNotice = false;
   },
   // module department
-  getDepartments(state, payload) {
-    state.departments = payload;
+  getDepartments(state, departments) {
+    state.departments = departments;
   }
 }

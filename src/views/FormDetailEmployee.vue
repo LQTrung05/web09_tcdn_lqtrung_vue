@@ -27,7 +27,7 @@
           <div
             class="m-icon-24 m-icon-close m-close-add-popup js-close-form"
             title="Đóng (ESC)"
-            @click="closeFormEmployee"
+            @click="toggleForm"
           ></div>
         </div>
       </div>
@@ -527,7 +527,6 @@ export default {
      * Author: LQTrung (4/11/2022)
      */
     validateEmail(value) {
-      //Dòng code bên dưới (dòng 518) không phải là comment, phải có dòng này thì regexEmail mới dùng được, bỏ đi sẽ xuất hiện 2 lỗi
       /* eslint-disable no-useless-escape */
       let errorMessage = "";
       let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -562,14 +561,10 @@ export default {
       }
       //Validate ngày sinh
       me.errorInput.dateOfBirth = this.validateDateTime(
-        me.employee.DateOfBirth,
-        "Ngày sinh"
-      );
+        me.employee.DateOfBirth,"Ngày sinh");
       //Validate ngày cấp
       me.errorInput.identityDate = this.validateDateTime(
-        me.employee.IdentityDate,
-        "Ngày cấp"
-      );
+        me.employee.IdentityDate,"Ngày cấp");
       //Validate Email phải đúng định dạng
       me.errorInput.emailEmployee = this.validateEmail(me.employee.Email);
       if (
@@ -593,6 +588,8 @@ export default {
       // trước khi lưu thì validate dữ liệu
       const me = this;
       let isValid = me.validateForm();
+      //let isValid = true;
+
       //Chuyển về chế độ Cất
       if(me.formMode == FormMode.insertAndAdd)
         me.setFormMode(FormMode.insert);

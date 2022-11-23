@@ -107,7 +107,7 @@
                   <div class="m-icon-16 m-icon-arrow-down-blue"></div>
                 </button>
                 <div class="child-multi-choices" style="min-width: 120px">
-                  <div class="duplication m-chil-dd">Nhân bản</div>
+                  <div class="duplication m-chil-dd" @click="duplicateEmployee(item)">Nhân bản</div>
                   <div class="delete-epl m-chil-dd" @click="confirmDeleteEmployee(item)">Xóa</div>
                   <div class="pause m-chil-dd">Ngưng sử dụng</div>
                 </div>
@@ -146,6 +146,7 @@ export default {
     ...mapActions(["toggleAlert"]),   
     ...mapActions(["setAlert"]), 
     ...mapActions(["toggleProgressLoading"]),
+    ...mapActions(["getNewEmployeeCode"]),
     /**
      * Hàm định dạng dữ liệu ngày tháng về dạng dd/mm/yy
      * @param value Ngày tháng nhập vào
@@ -175,6 +176,19 @@ export default {
         me.setTitleForm("Thông tin chi tiết nhân viên");
         me.toggleForm();
         me.setFormMode(formMode.update);
+    },
+    /**
+     * Mở form thêm mới nhân viên để nhân bản
+     * @param employee nhân viên được nhân bản
+     * Author: LQTrung(21/11/2022)
+     */
+    duplicateEmployee(employee){
+        const me = this;
+        me.getNewEmployeeCode();
+        me.setDetailEmployee(employee);
+        me.setTitleForm("Nhân bản nhân viên");
+        me.toggleForm();
+        me.setFormMode(formMode.insert);
     },
     /**
      * Hàm xác nhận xóa nhân viên được chọn
