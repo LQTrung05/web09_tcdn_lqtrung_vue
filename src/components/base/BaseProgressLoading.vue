@@ -1,6 +1,6 @@
 <template>
   <div class="loading-data" v-if="isShowProgress">
-        <img src="../assets/loading.svg" alt="" class="img-loading">
+        <img src="../../assets/loading.svg" alt="" class="img-loading">
     </div>
 </template>
 <script>
@@ -12,5 +12,5 @@ export default {
 }
 </script>
 <style scoped>
-@import url("../css/components/loading.css");
+@import url("../../css/components/loading.css");
 </style>

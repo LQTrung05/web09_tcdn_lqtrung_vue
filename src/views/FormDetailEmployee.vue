@@ -11,7 +11,7 @@
               tabindex="1"
               value="1"
             />
-            <span class="m-input-checkbox-label">Là khách hàng</span>
+            <span class="m-input-checkbox-label">{{propertyName.isCustomer}}</span>
           </label>
           <label class="m-popup-checkbox display-f">
             <input
@@ -19,14 +19,14 @@
               class="m-input-checkbox-popup"
               tabindex="2"
             />
-            <span class="m-input-checkbox-label">Là nhà cung cấp</span>
+            <span class="m-input-checkbox-label">{{propertyName.isProvider}}</span>
           </label>
         </div>
         <div class="popup-close">
-          <div class="m-icon-24 m-icon-help" style="margin-right: 8px" title="Trợ giúp"></div>
+          <div class="m-icon-24 m-icon-help" style="margin-right: 8px" :title="text.helpToolTip"></div>
           <div
             class="m-icon-24 m-icon-close m-close-add-popup js-close-form"
-            title="Đóng (ESC)"
+            :title="text.close"
             @click="toggleForm"
           ></div>
         </div>
@@ -38,7 +38,7 @@
               <div class="m-layout-form-40-60 display-f">
                 <div class="m-input-form-40 m-pr-6 m-mb-24">
                   <div class="display-f m-mb-8">
-                    <div class="m-input-title-required m-input-title">Mã</div>
+                    <div class="m-input-title-required m-input-title">{{propertyName.employeeCode}}</div>
                     <div class="m-icon-require">&nbsp;*</div>
                   </div>
                   <input
@@ -48,7 +48,6 @@
                     v-model="employee.EmployeeCode"
                     :class="{ 'm-input-form-error': errorInput.employeeCode }"
                     maxlength="25"
-                    
                     tabindex="3"
                   />
                   <div class="err-message err-id-employee">
@@ -57,7 +56,7 @@
                 </div>
                 <div class="m-input-form-60 m-mb-24">
                   <div class="display-f m-mb-8">
-                    <div class="m-input-title-required m-input-title">Tên</div>
+                    <div class="m-input-title-required m-input-title">{{propertyName.employeeName}}</div>
                     <div class="m-icon-require">&nbsp;*</div>
                   </div>
                   <input
@@ -78,7 +77,7 @@
               <div class="m-layout-form-40-60 display-f">
                 <div class="m-pr-6 m-mb-24">
                   <div class="m-mb-8">
-                    <div class="m-input-title">Ngày sinh</div>
+                    <div class="m-input-title">{{propertyName.dateOfBirth}}</div>
                   </div>
                   <input
                     type="date"
@@ -93,7 +92,7 @@
                 </div>
                 <div class="m-input-form-60 m-mb-24">
                   <div class="m-mb-8">
-                    <div class="m-input-title">Giới tính</div>
+                    <div class="m-input-title">{{propertyName.gender}}</div>
                   </div>
                   <div class="m-radio-group">
                     <label class="m-con-radio">
@@ -106,7 +105,7 @@
                         value= 0
                         tabindex="6"
                       />
-                      <span class="m-radio-label">Nam</span>
+                      <span class="m-radio-label">{{text.male}}</span>
                     </label>
                     <label class="m-con-radio">
                       <input
@@ -118,7 +117,7 @@
                         v-model="employee.Gender"
                         tabindex="6"
                       />
-                      <span class="m-radio-label">Nữ</span>
+                      <span class="m-radio-label">{{text.female}}</span>
                     </label>
                     <label class="m-con-radio">
                       <input
@@ -130,7 +129,7 @@
                         v-model="employee.Gender"
                         tabindex="6"
                       />
-                      <span class="m-radio-label">Khác</span>
+                      <span class="m-radio-label">{{text.other}}</span>
                     </label>
                   </div>
                 </div>
@@ -141,23 +140,21 @@
             <div class="m-col-1">
               <div class="m-input-form-100 m-mb-24">
                 <div class="display-f m-mb-8">
-                  <div class="m-input-title-required m-input-title">Đơn vị</div>
+                  <div class="m-input-title-required m-input-title">
+                    {{propertyName.departmentName}}
+                  </div>
                   <div class="m-icon-require">&nbsp;*</div>
                 </div>
 
                 <div class="dropdownlist dropdown-department">
                   <input
                     class="input dropdownlist__input required"
-                    name="DepartmentName"
                     tabindex="7"
                     readonly="true"
-                    id="departmentName"
-                    propName="DepartmentName"
                     v-model="employee.DepartmentName"
                     :class="{ 'm-input-form-error': errorInput.departmentId }"
                     type="text"
                   />
-
                   <div
                     class="dropdownlist__button btn-department"
                     id="btn-"
@@ -186,7 +183,9 @@
               </div>
               <div class="m-input-form-100 m-mb-24">
                 <div class="m-mb-8">
-                  <div class="m-input-title">Chức danh</div>
+                  <div class="m-input-title">
+                    {{propertyName.employeePosition}}
+                  </div>
                 </div>
                 <input
                   type="text"
@@ -205,8 +204,8 @@
               <div class="m-layout-form-40-60 display-f">
                 <div class="m-input-form-60 m-pr-6 m-mb-24">
                   <div class="m-mb-8">
-                    <div class="m-input-title" title="Số chứng minh nhân dân">
-                      Số CMND
+                    <div class="m-input-title" :title="propertyName.identityNumberToolTip">
+                      {{propertyName.identityNumber}}
                     </div>
                   </div>
                   <input
@@ -223,7 +222,9 @@
                 </div>
                 <div class="m-input-form-40 m-mb-24">
                   <div class="m-mb-8">
-                    <div class="m-input-title">Ngày cấp</div>
+                    <div class="m-input-title">
+                      {{propertyName.identityDate}}
+                    </div>
                   </div>
                   <input
                     type="date"
@@ -240,7 +241,9 @@
               </div>
               <div class="m-input-form-100 m-mb-24">
                 <div class="m-mb-8">
-                  <div class="m-input-title">Nơi cấp</div>
+                  <div class="m-input-title">
+                    {{propertyName.identityPlace}}
+                  </div>
                 </div>
                 <input
                   type="text"
@@ -258,7 +261,9 @@
           <div class="m-form-content-1-col display-f">
             <div class="m-input-form-100 m-mb-24">
               <div class="m-mb-8">
-                <div class="m-input-title">Địa chỉ</div>
+                <div class="m-input-title">
+                  {{propertyName.address}}
+                </div>
               </div>
               <input
                 type="text"
@@ -276,8 +281,8 @@
           <div class="m-form-content-3-col m-mb-24">
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
-                <div class="m-input-title" title="Điện thoại di động">
-                  ĐT di động
+                <div class="m-input-title" :title="propertyName.phoneNumberToolTip">
+                  {{propertyName.phoneNumber}}
                 </div>
               </div>
               <input
@@ -294,8 +299,8 @@
 
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
-                <div class="m-input-title" title="Điện thoại cố định">
-                  ĐT cố định
+                <div class="m-input-title" :title="propertyName.landPhoneToolTip">
+                  {{propertyName.landPhone}}
                 </div>
               </div>
               <input
@@ -311,7 +316,7 @@
             </div>
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
-                <div class="m-input-title">Email</div>
+                <div class="m-input-title">{{propertyName.email}}</div>
               </div>
               <input
                 type="text"
@@ -330,7 +335,7 @@
           <div class="m-form-content-3-col m-mb-24">
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
-                <div class="m-input-title">Tài khoản ngân hàng</div>
+                <div class="m-input-title">{{propertyName.bankAccountNumber}}</div>
               </div>
               <input
                 type="text"
@@ -345,7 +350,7 @@
             </div>
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
-                <div class="m-input-title">Tên ngân hàng</div>
+                <div class="m-input-title">{{propertyName.bankName}}</div>
               </div>
               <input
                 type="text"
@@ -360,7 +365,9 @@
             </div>
             <div class="m-input-form-33 m-pr-6">
               <div class="m-mb-8">
-                <div class="m-input-title">Chi nhánh</div>
+                <div class="m-input-title"
+                     :title="propertyName.bankBranchNameTooltip" >
+                     {{propertyName.bankBranchName}}</div>
               </div>
               <input
                 type="text"
@@ -378,7 +385,7 @@
           <div class="m-form-footer">
             <div class="m-form-part-cancel">
               <Button
-                btnText="Hủy"
+                :btnText="text.cancel"
                 addClass="m-btn"
                 @click="toggleForm"
                 tabindex="22"
@@ -387,14 +394,14 @@
             <div class="m-form-part-submit">
               <div class="m-form-part-save">
                 <Button
-                  btnText="Cất"
+                  :btnText="text.store"
                   addClass="m-btn"
                   tabindex="21"
                   @click.prevent="save"
                 ></Button>
               </div>
               <Button
-                btnText="Cất và thêm"
+                :btnText="text.storeAndAdd"
                 tabindex="20"
                 @click.prevent="saveAndReset"
               ></Button>
@@ -410,6 +417,7 @@
 import { mapActions, mapGetters } from "vuex";
 import Button from "../components/base/BaseButton.vue";
 import FormMode from "../enums/formMode";
+import resourceVN from "../resource/resourceVN"
 
 // const me = this;
 export default {
@@ -447,6 +455,8 @@ export default {
         type: "",
         message: "",
       },
+      propertyName: resourceVN.PROPERTY_NAME,
+      text: resourceVN.TEXT,
     };
   },
   computed: mapGetters([
@@ -502,11 +512,11 @@ export default {
     validateEmployeeCode() {
       const me = this;
       //Validate mã nhân viên
-       let regex = /(NV)(\d+)$|(nv)(\d+)$/;
+      let regex = /(\d+)$/;
       if (!me.employee.EmployeeCode)
         me.errorInput.employeeCode = "Mã không để trống";
       else if (!regex.exec(me.employee.EmployeeCode))
-         me.errorInput.employeeCode = "Mã phải là NV + số";
+         me.errorInput.employeeCode = "Mã phải kết thúc là số";
     },
 
     /**
@@ -632,10 +642,6 @@ export default {
 
       }
     },
-
-    
-
-    
   },
 };
 </script>

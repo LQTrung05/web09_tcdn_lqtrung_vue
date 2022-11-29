@@ -170,6 +170,12 @@
 .m-icon-success {
     background-position: -984px -456px;
 }
+.m-icon-arrow-right{
+    background-position: -84px -361px ;
+}
+.m-icon-arrow-left{
+    background-position: -36px -361px;
+}
 
 .m-icon-loading {
     background: url(../../assets/loading.svg) no-repeat center;
@@ -185,3 +191,4 @@
     cursor: pointer;
     opacity: 60%;
 }
+

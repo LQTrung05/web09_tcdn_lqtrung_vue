@@ -12,9 +12,6 @@
     background-color: #73C663;
     cursor: pointer;
 }
-/* .m-button:focus{
-    background-color: #409330;
-} */
 .m-button:disabled{
     opacity:0.56;
 }
@@ -33,13 +30,16 @@
     outline: 1px solid #e2e2e2 !important;
     background-color: #E0E0E0 !important;
 }
-/* .m-btn:focus{
-    cursor: pointer;
-    background-color: #BDBDBD;
-} */
-
 .btn-icon{
     background-image: url(../../assets/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
     /* background-position: ;  */
+}
+.batch-execution{
+    background-color: #fff;
+    border-radius: 20px;
+    color: #000;
+}
+.batch-execution:hover{
+    background-color: #fff;
 }

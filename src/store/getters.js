@@ -11,8 +11,11 @@ const isShowForm = state => state.isShowForm
 const isShowAlert = state => state.isShowAlert
 const isShowProgress = state =>state.isShowProgress
 const isShowSuccessNotice = state => state.isShowSuccessNotice
-
+const lastRecord = state => state.lastRecord
+const listIDEmployeeSelected = state => state.listIDEmployeeSelected
+const isCheckedAll = state => state.isCheckedAll
 const departments = state => state.departments
+const noticeAction = state => state.noticeAction
 
 export default {
   filter,
@@ -28,6 +31,9 @@ export default {
   isShowAlert,
   isShowProgress,
   isShowSuccessNotice,
-
+  lastRecord,
+  listIDEmployeeSelected,
+  isCheckedAll,
+  noticeAction,
   departments
 }

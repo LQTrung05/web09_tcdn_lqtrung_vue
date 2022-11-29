@@ -4,112 +4,142 @@
       <thead>
         <tr>
           <th class="text-align-center">
-            <input id="choose-all" type="checkbox" />
+            <input
+              id="choose-all"
+              type="checkbox"
+              v-model="isCheckedAll"
+              @click="clickCheckAll"
+            />
           </th>
           <th
             class="text-align-left"
             fieldname="EmployeeCode"
-            style="min-width: 140px"
+            style="min-width: 130px"
           >
-            Mã nhân viên
+            {{ propertyName.employeeCode }}
           </th>
           <th
             class="text-align-left"
             fieldname="EmployeeName"
-            style="min-width: 200px"
+            style="min-width: 180px"
           >
-            Tên nhân viên
+            {{ propertyName.employeeName }}
           </th>
           <th
             class="text-align-left"
             fieldname="Gender"
-            style="min-width: 130px"
+            style="min-width: 110px"
           >
-            Giới tính
+            {{ propertyName.gender }}
           </th>
           <th
-            class="text-align-center"
-            style="min-width: 120px"
+            class="text-align-left"
+            style="min-width: 130px"
             fieldname="DateOfBirth"
           >
-            Ngày sinh
+            {{ propertyName.dateOfBirth }}
           </th>
           <th
             class="text-align-left"
-            title="Số chứng minh nhân dân"
-            fieldname="IdentityNumber"
-            style="min-width: 130px"
-          >
-            Số CMND
-          </th>
-          <th
-            class="text-align-left"
-            style="min-width: 150px"
-            fieldname="EmployeePosition"
-          >
-            Chức danh
-          </th>
-          <th
-            class="text-align-left"
-            fieldname="DepartmentName"
+            :title="propertyName.identityNumberToolTip"
             style="min-width: 150px"
           >
-            Tên đơn vị
+            {{ propertyName.identityNumber }}
           </th>
-          <th
-            class="text-align-left"
-            style="min-width: 130px"
-            fieldname="BankAccountNumber"
-          >
-            Số tài khoản
+          <th class="text-align-left" style="min-width: 150px">
+            {{ propertyName.employeePosition }}
+          </th>
+          <th class="text-align-left" style="min-width: 160px">
+            {{ propertyName.departmentName }}
+          </th>
+          <th class="text-align-left" style="min-width: 150px">
+            {{ propertyName.bankAccountNumber }}
           </th>
           <th
             class="text-align-left"
             style="min-width: 150px"
             fieldname="BankName"
           >
-            Tên ngân hàng
+            {{ propertyName.bankName }}
           </th>
           <th
             class="text-align-left"
-            style="min-width: 200px"
-            fieldname="BankBranchName"
+            style="min-width: 220px"
+            :title="propertyName.bankBranchNameTooltip"
           >
-            Chi nhánh ngân hàng
+            {{ propertyName.bankBranchName }}
           </th>
-          <th class="text-align-center" style="min-width: 110px">Chức năng</th>
+          <th class="text-align-center" style="min-width: 110px">
+            {{ text.function }}
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in employees" :key="index" @dblclick="openDetailFormEmployee(item)" >
-          <td class="text-align-center">
-            <input type="checkbox" name="choose" class="m-input-checkbox" />
+        <tr
+          v-for="(item, index) in employees"
+          :key="index"
+          :class="{ 'm-checked': item.isChecked }"
+          @dblclick="openDetailFormEmployee(item)"
+        >
+          <td
+            class="text-align-center"
+            :class="{ 'm-checked': item.isChecked }"
+          >
+            <input
+              type="checkbox"
+              name="choose"
+              class="m-input-checkbox"
+              v-model="item.isChecked"
+              @change="rowChecked(item.EmployeeID)"
+            />
           </td>
           <td class="text-align-left">{{ item.EmployeeCode }}</td>
           <td class="text-align-left">{{ item.EmployeeName }}</td>
           <td class="text-align-left">{{ item.GenderName }}</td>
-          <td class="text-align-left">{{ formatDateData(item.DateOfBirth) }}</td>
+          <td class="text-align-left">
+            {{ formatDateData(item.DateOfBirth) }}
+          </td>
           <td class="text-align-left">{{ item.IdentityNumber }}</td>
           <td class="text-align-left">{{ item.PositionName }}</td>
           <td class="text-align-left">{{ item.DepartmentName }}</td>
           <td class="text-align-left">{{ item.BankAccountNumber }}</td>
           <td class="text-align-left">{{ item.BankName }}</td>
           <td class="text-align-left">{{ item.BankBranchName }}</td>
-          <td class="text-align-center show-contexMenu" @dblclick.stop :style="{'z-index': employees.length-index}">
+          <td
+            class="text-align-center show-contexMenu"
+            @dblclick.stop
+            :style="{ 'z-index': employees.length - index }"
+            :class="{ 'm-checked': item.isChecked }"
+          >
             <div class="function-col">
               <div class="function-col__update">
-                <button class="btn-edit-epl" @click="openDetailFormEmployee(item)">
-                  Sửa
+                <button
+                  class="btn-edit-epl"
+                  @click="openDetailFormEmployee(item)"
+                >
+                  {{ text.update }}
                 </button>
               </div>
-              <div class="function-col__menu m-ml-8">
+              <div class="function-col__menu m-ml-8" :title="text.otherAction">
                 <button>
                   <div class="m-icon-16 m-icon-arrow-down-blue"></div>
                 </button>
                 <div class="child-multi-choices" style="min-width: 120px">
-                  <div class="duplication m-chil-dd" @click="duplicateEmployee(item)">Nhân bản</div>
-                  <div class="delete-epl m-chil-dd" @click="confirmDeleteEmployee(item)">Xóa</div>
-                  <div class="pause m-chil-dd">Ngưng sử dụng</div>
+                  <div
+                    class="duplication m-chil-dd"
+                    @click="duplicateEmployee(item)"
+                  >
+                    {{ text.duplicate }}
+                  </div>
+                  <div
+                    class="delete-epl m-chil-dd"
+                    @click="confirmDeleteEmployee(item)"
+                  >
+                    {{ text.delete }}
+                  </div>
+                  <div class="pause m-chil-dd">
+                    {{ text.stopUsing }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,33 +150,44 @@
   </div>
 </template>
 <script>
-import formMode from '../enums/formMode';
-import { mapActions, mapGetters } from 'vuex';
+import formMode from "../enums/formMode";
+import resourceVN from "../resource/resourceVN";
+import { mapActions, mapGetters } from "vuex";
+import noticeAction from '@/enums/noticeAction';
 export default {
   name: "BaseTable",
-  components:{
-  },
+  components: {},
   created() {
+    this.setLastRecord();
     this.toggleProgressLoading();
     this.getEmployees();
     setTimeout(() => {
       this.toggleProgressLoading();
-    }, 1000);
+    }, 1500);
   },
   computed: mapGetters([
     "employees",
     "employee",
+    "listIDEmployeeSelected",
+    "isCheckedAll",
   ]),
   methods: {
-    ...mapActions(["getEmployees"]),
-    ...mapActions(["setDetailEmployee"]),
-    ...mapActions(["toggleForm"]),
-    ...mapActions(["setTitleForm"]),
-    ...mapActions(["setFormMode"]),
-    ...mapActions(["toggleAlert"]),   
-    ...mapActions(["setAlert"]), 
-    ...mapActions(["toggleProgressLoading"]),
-    ...mapActions(["getNewEmployeeCode"]),
+    ...mapActions([
+      "getEmployees",
+      "setDetailEmployee",
+      "toggleForm",
+      "setTitleForm",
+      "setFormMode",
+      "toggleAlert",
+      "setAlert",
+      "toggleProgressLoading",
+      "getNewEmployeeCode",
+      "setLastRecord",
+      "setListDeleteEmployee",
+      "setCheckAllEmployee",
+      "setNoticeAction",
+    ]),
+
     /**
      * Hàm định dạng dữ liệu ngày tháng về dạng dd/mm/yy
      * @param value Ngày tháng nhập vào
@@ -170,37 +211,90 @@ export default {
      * @param item nhân viên được chọn
      * Author: LQTrung (5/11/2022)
      */
-    openDetailFormEmployee(item){
-        const me = this;
-        me.setDetailEmployee(item);
-        me.setTitleForm("Thông tin chi tiết nhân viên");
-        me.toggleForm();
-        me.setFormMode(formMode.update);
+    openDetailFormEmployee(item) {
+      const me = this;
+      me.setDetailEmployee(item);
+      me.setTitleForm("Thông tin chi tiết nhân viên");
+      me.toggleForm();
+      me.setFormMode(formMode.update);
     },
+    /**
+     * Đưa những nhân viên được check vào trong danh sách sách
+     */
+    rowChecked(employeeID) {
+      const me = this;
+      //Nếu danh sách xóa mà đang rỗng, cho listEmployeeID về rỗng
+      if (me.listIDEmployeeSelected.length === 0) me.listEmployeeID = [];
+      //Bỏ check 1 dòng trong table
+      if (me.listIDEmployeeSelected.includes(employeeID)) {
+        me.listEmployeeID = me.listIDEmployeeSelected.filter(
+          (item) => item != employeeID
+        );
+        me.setListDeleteEmployee(me.listEmployeeID);
+      }
+      //Check 1 dòng trong table
+      else {
+        var index = me.listEmployeeID.length;
+        if (index == 0) me.listEmployeeID[index] = employeeID;
+        else me.listEmployeeID[index] = employeeID;
+
+        me.setListDeleteEmployee(me.listEmployeeID);
+      }
+      //Nếu tất cả các dòng được check, thì check all được hiện
+      if (me.listIDEmployeeSelected.length == me.employees.length)
+        me.setCheckAllEmployee(true);
+      else me.setCheckAllEmployee(false);
+    },
+
+    /**
+     * Chọn checkbox check all trên header table
+     */
+    clickCheckAll() {
+      const me = this;
+      if (me.isCheckedAll) {
+        me.employees.forEach((item) => {
+          item.isChecked = false;
+          me.setCheckAllEmployee(false);
+          me.setListDeleteEmployee([]);
+          me.listEmployeeID = [];
+        });
+      } else {
+        let i = 0;
+        me.employees.forEach((item) => {
+          item.isChecked = true;
+          me.setCheckAllEmployee(true);
+          me.listEmployeeID[i] = item.EmployeeID;
+          i++;
+        });
+        me.setListDeleteEmployee(me.listEmployeeID);
+      }
+    },
+
     /**
      * Mở form thêm mới nhân viên để nhân bản
      * @param employee nhân viên được nhân bản
      * Author: LQTrung(21/11/2022)
      */
-    duplicateEmployee(employee){
-        const me = this;
-        me.getNewEmployeeCode();
-        me.setDetailEmployee(employee);
-        me.setTitleForm("Nhân bản nhân viên");
-        me.toggleForm();
-        me.setFormMode(formMode.insert);
+    duplicateEmployee(employee) {
+      const me = this;
+      me.getNewEmployeeCode();
+      me.setDetailEmployee(employee);
+      me.setTitleForm("Nhân bản nhân viên");
+      me.toggleForm();
+      me.setFormMode(formMode.insert);
     },
     /**
      * Hàm xác nhận xóa nhân viên được chọn
      * @param employee nhân viên muốn xóa
      * Author: LQTrung (5/11/2022)
      */
-    confirmDeleteEmployee(employee){
+    confirmDeleteEmployee(employee) {
       const me = this;
+      me.setNoticeAction(noticeAction.deleteAEmployee);
       me.alert = {
-          type:"confirmDelete",
-          message:`Bạn có thực sự muốn xóa nhân viên <${employee.EmployeeCode}> không?`
-      } 
+        type: "confirmDelete",
+        message: `Bạn có thực sự muốn xóa nhân viên <${employee.EmployeeCode}> không?`,
+      };
       me.setDetailEmployee(employee);
       me.setAlert(me.alert);
       me.toggleAlert();
@@ -208,15 +302,21 @@ export default {
   },
   data() {
     return {
-      alert:{
-        type:"",
-        message:""
-      }
+      alert: {
+        type: "",
+        message: "",
+      },
+      propertyName: resourceVN.PROPERTY_NAME,
+      text: resourceVN.TEXT,
+      listEmployeeID: [],
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
-  @import url("../css/components/table.css");
+@import url("../css/components/table.css");
+.m-checked {
+  background-color: #f1ffef;
+}
 </style>

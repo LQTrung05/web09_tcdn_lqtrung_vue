@@ -11,8 +11,8 @@ export default {
    */
   getEmployees(context) {
     try {
-      axios.get('http://localhost:8080/api/v1/Employees/SearchAndPaging', { params: { limit: state.filter.pageSize, pageNumber: state.filter.pageNumber, keyword: state.filter.employeeFilter } }, )
-      .then(response => context.commit('getEmployees', response.data))
+      axios.get('http://localhost:8080/api/v1/Employees/SearchAndPaging', { params: { limit: state.filter.pageSize, pageNumber: state.filter.pageNumber, keyword: state.filter.employeeFilter } },)
+        .then(response => context.commit('getEmployees', response.data))
     } catch (error) {
       console.log(error);
     }
@@ -22,10 +22,10 @@ export default {
    * @param {*} context 
    * Author: LQTrung (8/11/2022)
    */
-  getNewEmployeeCode(context){
+  getNewEmployeeCode(context) {
     try {
       axios.get('http://localhost:8080/api/v1/Employees/NewEmployeeCode')
-      .then(response => context.commit('getNewEmployeeCode', response.data))
+        .then(response => context.commit('getNewEmployeeCode', response.data))
     } catch (error) {
       console.log(error);
     }
@@ -68,10 +68,10 @@ export default {
         })
         .catch((res) => {
           console.log(res),
-          this.alert = {
-            type: "danger",
-            message: res.response.data.Data[0],
-          };
+            this.alert = {
+              type: "danger",
+              message: res.response.data.Data[0],
+            };
           context.dispatch("setAlert", this.alert);
           context.dispatch("toggleAlert");
         });
@@ -85,11 +85,11 @@ export default {
      * @param {context} thông tin mới của nhân viên muốn cập nhật
      * Author: LQTrung (09/11/2022)
   */
-   updateEmployee(context) {
+  updateEmployee(context) {
     try {
       axios
         .put(
-          `http://localhost:8080/api/v1/Employees/${state.employee.EmployeeID}`,state.employee)
+          `http://localhost:8080/api/v1/Employees/${state.employee.EmployeeID}`, state.employee)
         .then(() => {
           context.dispatch("toggleProgressLoading");
           //Load lại dữ liệu
@@ -108,11 +108,11 @@ export default {
               context.dispatch("toggleProgressLoading");
               context.dispatch("openNotice");
             }, 500);
-            context.dispatch("setDetailEmployee",{ Gender: Gender.male });
+            context.dispatch("setDetailEmployee", { Gender: Gender.male });
             context.dispatch("getNewEmployeeCode");
 
           }
-          context.dispatch("setTitleNotice","Sửa nhân viên thành công");
+          context.dispatch("setTitleNotice", "Sửa nhân viên thành công");
           setTimeout(() => {
             context.dispatch("closeNotice");
           }, 5000);
@@ -120,16 +120,16 @@ export default {
         .catch((res) => {
           this.alert = {
             type: "danger",
-            message:res.response.data.Data[0],
+            message: res.response.data.Data[0],
           };
-          context.dispatch("setAlert",this.alert);
+          context.dispatch("setAlert", this.alert);
           context.dispatch("toggleAlert");
         });
     } catch (error) {
       console.log(error);
     }
   },
-  
+
   /**
    * Hàm xóa nhân viên được chọn
    * @param {*} context
@@ -146,7 +146,7 @@ export default {
           context.dispatch("toggleProgressLoading");
           //Load lại dữ liệu
           context.dispatch("getEmployees");
-          context.dispatch("setTitleNotice","Xóa thành công");
+          context.dispatch("setTitleNotice", "Xóa thành công");
           setTimeout(() => {
             context.dispatch("toggleProgressLoading");
             //Bật thông báo xóa thành công
@@ -155,41 +155,112 @@ export default {
           setTimeout(() => {
             context.dispatch("closeNotice");
           }, 5000);
+
+          //Quay về trang đầu nếu đã xóa tất cả nhân viên ở trang cuối cùng
+          if (state.filter.pageNumber == state.totalPage && state.employees.length == 1) {
+            context.dispatch("setFilter", {
+              pageSize: state.filter.pageSize,
+              pageNumber: 1,
+              employeeFilter: state.filter.employeeFilter
+            })
+          }
+          context.dispatch("getEmployees")
+          //Cập nhật lại bản ghi cuối cùng của paging
+          context.dispatch("setLastRecord")
+        })
+        .catch((res) => {
+          this.alert = {
+            type: "danger",
+            message: res.response.data.Data[0],
+          };
+          context.dispatch("setAlert", this.alert);
+          context.dispatch("toggleAlert");
         });
+
     } catch (error) {
       console.log(error);
     }
   },
 
   /**
+   * Hàm xóa nhiều nhân viên cùng lúc
+   * @param {*} context 
+   * Author: LQTrung (9/11/2022)
+   */
+  deleteBatchEmployee(context) {
+    try {
+      axios
+        .post(
+          `http://localhost:8080/api/v1/Employees/DeleteBatch`, state.listIDEmployeeSelected
+        )
+        .then(() => {
+          context.dispatch("toggleAlert");
+          context.dispatch("toggleProgressLoading");
+          //Load lại dữ liệu
+          context.dispatch("getEmployees");
+          context.dispatch("setTitleNotice", "Xóa thành công");
+          setTimeout(() => {
+            context.dispatch("toggleProgressLoading");
+            //Bật thông báo xóa thành công
+            context.dispatch("openNotice");
+          }, 500);
+          setTimeout(() => {
+            context.dispatch("closeNotice");
+          }, 5000);
+
+          //Quay về trang đầu nếu đã xóa tất cả nhân viên ở trang cuối cùng
+          if (state.filter.pageNumber == state.totalPage && state.employees.length == state.listIDEmployeeSelected.length) {
+            context.dispatch("setFilter", {
+              pageSize: state.filter.pageSize,
+              pageNumber: 1,
+              employeeFilter: state.filter.employeeFilter
+            })
+          }
+          context.dispatch("getEmployees")
+          //Cập nhật lại bản ghi cuối cùng của paging
+          context.dispatch("setLastRecord")
+          context.dispatch("setCheckAllEmployee",false);
+          context.dispatch("setListDeleteEmployee",[]);
+        });
+
+    } catch (error) {
+      this.alert = {
+        type: "danger",
+        message: error.response.UsersMsg,
+      };
+      context.dispatch("setAlert", this.alert);
+      context.dispatch("toggleAlert");
+    }
+  },
+  /**
    * Hàm export danh sách nhân viên ra file excel
    * @param {*} context 
    */
-  exportExcel(){
+  exportExcel() {
     try {
       axios
-      .get("http://localhost:8080/api/v1/Employees/ExportExcelFile",  {
-        responseType: "blob"
-      })
-      .then(response => {
-        const url = URL.createObjectURL(
-          new Blob([response.data], {
-            type: "application/vnd.ms-excel"
-          })
-        );
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "file.xlsx");
-        document.body.appendChild(link);
-        link.click();
-      });
+        .get("http://localhost:8080/api/v1/Employees/ExportExcelFile", {
+          responseType: "blob"
+        })
+        .then(response => {
+          const url = URL.createObjectURL(
+            new Blob([response.data], {
+              type: "application/vnd.ms-excel"
+            })
+          );
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "file.xlsx");
+          document.body.appendChild(link);
+          link.click();
+        });
 
-      
+
     } catch (error) {
       console.log(error);
     }
   },
-  
+
   toggleForm(context) {
     context.commit('toggleForm');
   },
@@ -216,17 +287,32 @@ export default {
   setFormMode(context, mode) {
     context.commit("setFormMode", mode);
   },
+  setNoticeAction(context, noticeAction) {
+    context.commit("setNoticeAction", noticeAction);
+  },
   setAlert(context, alert) {
     context.commit("setAlert", alert);
   },
   setFilter(context, filter) {
     context.commit("setFilter", filter);
   },
-  openNotice(context){
+  setLastRecord(context) {
+    context.commit("setLastRecord")
+  },
+  setListDeleteEmployee(context, employeeIDListDeleted) {
+    context.commit("setListDeleteEmployee", employeeIDListDeleted)
+  },
+  setCheckAllEmployee(context, value) {
+    context.commit("setCheckAllEmployee", value);
+  },
+  openNotice(context) {
     context.commit("openNotice");
   },
-  closeNotice(context){
+  closeNotice(context) {
     context.commit("closeNotice");
+  },
+  listIDEmployeeSelected(context, listID) {
+    context.commit("listIDEmployeeSelected", listID);
   },
 
   // Phần module department

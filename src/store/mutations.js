@@ -40,17 +40,34 @@ export default {
   setFormMode(state, formMode) {
     state.formMode = formMode;
   },
+  setNoticeAction(state, noticeAction){
+    state.noticeAction = noticeAction;
+  },
   setAlert(state, alert) {
     state.alert = alert;
   },
   setFilter(state,filter){
     state.filter = filter;
   },
+  setLastRecord(state){
+    if(state.filter.pageNumber == state.totalPage)
+      state.lastRecord = state.totalEmployee
+      else state.lastRecord = (state.filter.pageNumber * state.filter.pageSize)
+  },
+  setListDeleteEmployee(state, employeeIDListDeleted){
+    state.listIDEmployeeSelected = employeeIDListDeleted;
+  },
+  setCheckAllEmployee(state, value){
+    state.isCheckedAll = value;
+  },
   openNotice(state){
     state.isShowSuccessNotice = true; 
   },
   closeNotice(state){
     state.isShowSuccessNotice = false;
+  },
+  listIDEmployeeSelected(state, listID){
+    state.listIDEmployeeSelected = listID
   },
   // module department
   getDepartments(state, departments) {

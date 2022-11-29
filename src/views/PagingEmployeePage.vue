@@ -1,50 +1,48 @@
 <template>
   <div class="m-paging">
     <div class="m-paging-left">
-      Tổng số: <b>{{ totalEmployee }}</b> bản ghi
+      {{text.total}}: <b>{{ totalEmployee }}</b>
     </div>
     <div class="m-paging-right">
+      <div class="text-number-record">{{text.numberRecordPerPage}}: </div>
       <div class="m-paging-right-option">
-        <div class="dropdownlist">
-          <input
-            class="input dropdownlist__input"
-            type="text"
-            :value="filter.pageSize + ' bản ghi trên 1 trang'"
-            readonly
-          />
-          <button class="btn-pagination" @click="toggleList">
-            <div
-              class="m-icon-arrow-dropdown m-icon-16"
-              style="align-self: center"
-            ></div>
-          </button>
+      <div class="dropdownlist">
+          <div class="page-size">{{filter.pageSize}}</div>
+          <div class="icon-choose-page-size m-icon-14 m-icon-chevron-down-bold "
+          @click="toggleList">
+          </div>
           <div
             v-if="isShowList"
-            class="dropdownlist__data numbers-record-in-a-page bottom-100"
-          >
+            class="numbers-record-in-a-page bottom-100">
             <div
               class="data-item"
-              v-for="(item, index) in options"
+              v-for="(item, index) in options" 
               :key="index"
               @click="selectNumberRecord(item)"
             >
-              {{ item }}
+            {{item}}
+            <div v-if="item === filter.pageSize " class="m-icon-checkbox-active m-icon-14 m-item-icon-is-choose"></div>
             </div>
           </div>
         </div>
       </div>
+      <div style="padding-left: 16px">{{((filter.pageNumber-1)*filter.pageSize +1 )}} - {{lastRecord }} {{text.record}}</div>
       <div class="m-paging-right-page">
-        <!-- <button class="m-btn-first">Trước</button> -->
         <button
           :disabled="filter.pageNumber == 1"
+          :class="{'opacity': filter.pageNumber == 1}"
           class="m-btn-first"
-          @click="selectFrontPage">Trước</button>
-          
-        <button :class="{'selected': ischoose}">{{filter.pageNumber}}</button>
+          @click="selectFrontPage">
+          <div class="icon-choose-page-size m-icon-14 m-icon-arrow-left "></div>
+          </button>
+        <!-- <button :class="{'selected': ischoose}">{{filter.pageNumber}}</button> -->
         <button
           :disabled="filter.pageNumber == totalPage"
+          :class="{'opacity': filter.pageNumber == totalPage}"
           class="m-btn-last"
-          @click="selectNextPage">Sau</button>
+          @click="selectNextPage">
+          <div class="icon-choose-page-size m-icon-14 m-icon-arrow-right "></div>
+          </button>
       </div>
     </div>
   </div>
@@ -52,30 +50,40 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import resourceVN from "../resource/resourceVN"
 export default {
   computed:{
       ...mapGetters([
       "filter",
       "totalEmployee",
-      "totalPage"
-    ])
+      "totalPage",
+      "lastRecord"
+    ]),
   },
   data() {
     return {
       isShowList: false,
       ischoose:true,
       options: [
-        "10 bản ghi 1 trang",
-        "20 bản ghi 1 trang",
-        "30 bản ghi 1 trang",
-        "50 bản ghi 1 trang",
-        "100 bản ghi 1 trang",
+        "10",
+        "20",
+        "30",
+        "50",
+        "100",
       ],
+      propertyName: resourceVN.PROPERTY_NAME,
+      text: resourceVN.TEXT,
+      
     };
   },
   methods: {
-    ...mapActions(["setFilter"]),
-    ...mapActions(["getEmployees"]),
+    ...mapActions([
+      "setFilter",
+      "getEmployees",
+      "setLastRecord",
+      "setCheckAllEmployee",
+      "setListDeleteEmployee"
+    ]),
     toggleList() {
       this.isShowList = !this.isShowList;
     },
@@ -89,6 +97,10 @@ export default {
       });
       me.getEmployees();
       me.toggleList();
+      me.setLastRecord();
+      me.setCheckAllEmployee(false);
+      me.setListDeleteEmployee([]);
+
     },
     selectFrontPage() {
       const me = this;
@@ -98,11 +110,9 @@ export default {
         employeeFilter: me.filter.employeeFilter,
       });
       me.getEmployees();
+      me.setLastRecord();
+
     },
-    // selectedNumberPage(){
-    //   const me = this;
-    
-    // },
     selectNextPage(){
             const me = this;
             me.setFilter({
@@ -111,13 +121,21 @@ export default {
                 employeeFilter: me.filter.employeeFilter
             });
             me.getEmployees();
+      me.setLastRecord();
     }
+
   },
 };
+
 </script>
 <style scoped>
 @import url("../css/components/paging.css");
+.m-btn-first,.m-btn-last{
+  padding: 0 !important;
+}
 .m-btn-first,.m-btn-last:hover{
   cursor: pointer;
 }
+
+
 </style>

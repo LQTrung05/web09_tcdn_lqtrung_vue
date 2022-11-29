@@ -28,7 +28,6 @@
 }
 .dropdownlist__data{
   display: block;
-  /* top: 100%; */
   transition: opacity .1s, transform .1s, width .2s ease;
   z-index: 10;
   position: absolute;
@@ -126,6 +125,9 @@
   height: 36px;
   padding-left: 8px;
   line-height: 36px;
+
+  display: flex;
+  align-items: baseline;
 }
 .data-item:hover{
  background-color: rgba(80,184,60,0.1);

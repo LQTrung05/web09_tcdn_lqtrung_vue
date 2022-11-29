@@ -8,11 +8,14 @@
 .m-table{
     border-spacing: 0;
 }
-.m-table, .m-table td, .m-table th {
+thead .m-table tr{
+    background-color: #ccc;
+}
+.m-table td, .m-table th {
     width: 100%;
-    border-bottom: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    /* border-left: 1px solid #ccc; */
+    /* border-bottom: 1px solid #ccc; */
 
 }
 .m-table tr {
@@ -22,8 +25,9 @@
     font-family: 'notosans-bold';
     position: sticky;
     top: 0;
-    background-color: #fff;
     z-index: 3;
+    background-color: #eeeeee;
+
 }
 
 .m-table tr td,
@@ -43,9 +47,9 @@
 .m-table tbody tr:hover td{
     background-color: #F8F8F8;
 }
-.m-table tbody tr:focus-within td{
+/* .m-table tbody tr:focus-within td{
     background-color: #F1FFEF;
-}
+} */
 .m-table .text-align-left {
     text-align: left;
 }
@@ -68,12 +72,14 @@ th:first-child, td:first-child {
     position:sticky;
     left:0;
     background-color: #fff;
+
 }
 th:last-child, td:last-child{
     position:sticky;
     right:0;
     background-color: #fff;
-    
+    border-right: 1px solid #ccc;
+
 }
 
 .show-contexMenu {
@@ -84,7 +90,6 @@ th:last-child, td:last-child{
 /* .m-table-department th{
 } */
 .m-menu-table {
-    /* border-collapse: collapse; */
     height: 40px;
     width: 100%;
     background-color:#ccc;
@@ -115,4 +120,12 @@ th:last-child, td:last-child{
 }
 .checked{
     background-color: #F1FFEF;
+}
+.btn-delete-all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 4px;
+    border-radius: 16px;
+    border: 2px solid #000;
 }

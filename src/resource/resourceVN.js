@@ -1,0 +1,81 @@
+const PROPERTY_NAME = {
+  isCustomer: "Là khách hàng",
+  isProvider: "Là nhà cung cấp",
+  employeeCode: "Mã nhân viên",
+  employeeName: "Tên nhân viên",
+  gender: "Giới tính",
+  dateOfBirth: "Ngày sinh",
+  identityNumber: "Số CMND",
+  identityNumberToolTip: "Số chứng minh nhân dân",
+  identityDate: "Ngày cấp",
+  identityPlace: "Nơi cấp",
+  employeePosition: "Chức danh",
+  departmentName: "Tên đơn vị",
+  address: "Địa chỉ",
+  phoneNumber: "ĐT di động",
+  phoneNumberToolTip: "Điện thoại di động",
+  landPhone: "ĐT cố định",
+  landPhoneToolTip: "Điện thoại cố định",
+  email: "Email",
+  bankAccountNumber: "Số tài khoản",
+  bankName: "Tên ngân hàng",
+  bankBranchName: "Chi nhánh TK ngân hàng",
+  bankBranchNameTooltip: " Chi nhánh tài khoản ngân hàng"
+}
+const TEXT = {
+  employee: "Nhân viên",
+  insertEmployee: "Thêm mới nhân viên",
+  store: "Cất",
+  storeAndAdd: "Cất và thêm",
+  cancel: "Hủy",
+  no: "Không",
+  yes: "Có",
+  agree: "Đồng ý",
+  close: "Đóng",
+  prev: "Trước",
+  next: "Sau",
+  update: "Sửa",
+  otherAction: "Hành động khác",
+  duplicate: "Nhân bản",
+  delete: "Xóa",
+  stopUsing: "Ngưng sử dụng",
+  addFormTitle: "Thêm khách hàng",
+  modifyFormTitle: "Sửa khách hàng",
+  refreshToolTip: "Tải lại dữ liệu",
+  exportToolTip: "Xuất danh sách nhân viên ra file file",
+  total: "Tổng",
+  record:"bản ghi",
+  numberRecordPerPage: "Số bản ghi/trang",
+  searchPlaceHolder: "Tìm theo mã, tên nhân viên",
+  helpToolTip: "Trợ giúp",
+  escToolTip: "Thoát",
+  male: "Nam",
+  female: "Nữ",
+  other: "Khác",
+  batchAction: "Thực hiện hàng loạt",
+  function: "Chức năng",
+  success: "Thành công!",
+  nameCompany:"CÔNG TY TNHH SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ QUI PHÚC"
+}
+const NAVBAR_ITEM={
+  overView :"Tổng quan",
+  cash: "Tiền mặt",
+  deposit:"Tiền gửi",
+  manageInvoice:"Quản lý hóa đơn",
+  warehouse:"Kho",
+  purchase:"Mua hàng",
+  fixedAsset:"Tài sản cố định",
+  tax: "Thuế",
+  budget:" Ngân sách",
+  report:"Báo cáo",
+  synthetic:"Tổng hợp",
+  financialAnalysis:"Phân tích tài chính"
+}
+
+
+const resourceVN = {
+  PROPERTY_NAME,
+  TEXT,
+  NAVBAR_ITEM
+}
+export default resourceVN
