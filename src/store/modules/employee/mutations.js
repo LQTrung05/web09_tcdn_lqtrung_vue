@@ -12,28 +12,20 @@ export default {
       }
     }
   },
+  
   getNewEmployeeCode(state,employeeCode){
     state.employee.EmployeeCode = employeeCode;
   },
-  toggleForm(state) {
-    state.isShowForm = !state.isShowForm;
-  },
+  
   toggleNoticeMessage(state) {
     state.isShowSuccessNotice = !state.isShowSuccessNotice;
   },
-  toggleProgressLoading(state) {
-    state.isShowProgress = !state.isShowProgress;
-  },
-  toggleAlert(state) {
-    state.isShowAlert = !state.isShowAlert;
-  },
+  
+  
   setTitleForm(state, titleForm) {
     state.titleForm = titleForm;
   },
-  //Gán tiêu đề thêm, sửa, xóa thành công sau khi thực hiện thêm, sửa, xóa thành công
-  setTitleNotice(state, titleNotice) {
-    state.titleNotice = titleNotice;
-  },
+  
   setDetailEmployee(state, employee) {
     state.employee = JSON.parse(JSON.stringify(employee));
   },
@@ -42,9 +34,6 @@ export default {
   },
   setNoticeAction(state, noticeAction){
     state.noticeAction = noticeAction;
-  },
-  setAlert(state, alert) {
-    state.alert = alert;
   },
   setFilter(state,filter){
     state.filter = filter;
@@ -60,15 +49,11 @@ export default {
   setCheckAllEmployee(state, value){
     state.isCheckedAll = value;
   },
-  openNotice(state){
-    state.isShowSuccessNotice = true; 
-  },
-  closeNotice(state){
-    state.isShowSuccessNotice = false;
-  },
+  
   listIDEmployeeSelected(state, listID){
     state.listIDEmployeeSelected = listID
   },
+  
   // module department
   getDepartments(state, departments) {
     state.departments = departments;

@@ -22,11 +22,52 @@ const PROPERTY_NAME = {
   bankBranchName: "Chi nhánh TK ngân hàng",
   bankBranchNameTooltip: " Chi nhánh tài khoản ngân hàng"
 }
+
+const PROPERTY_NAME_OF_PROVIDER={
+  providerCode:"Mã nhà cung cấp",
+  taxCode:"Mã số thuế",
+  phoneNumber:"Số điện thoại",
+  website:"Website",
+  providerName:"Tên nhà cung cấp",
+  providerGroup:"Nhóm nhà cung cấp",
+  address: "Địa chỉ",
+  purchasingStaff:"Nhân viên mua hàng",
+  explain:"Diễn giải",
+  debt:"Số tiền nợ",
+  maxDebt:"Số nợ tối đa",
+  organization:"Tổ chức",
+  individual:"Cá nhân",
+  isCustomer: "Là khách hàng",
+  legalRepresentative:"Đại diện theo PL",
+  legalRepresentativeTooltip:"Đại diện theo pháp luật",
+  note:"Ghi chú",
+  providerTyper:"Tổ chức/Cá nhân",
+}
+const TERM_OF_PAYMENT={
+  termOfPayment:"Điều khoản thanh toán",
+  termOfPaymentCode:"Mã điều khoản thanh toán",
+  termOfPaymentName:"Tên điều khoản thanh toán"
+}
+const PROVIDER_GROUP={
+  providerGroupCode: "Mã nhóm KH, NCC",
+  providerGroupName: "Tên nhóm KH, NCC",
+
+}
+const ACCOUNT_PAYABLE={
+  accountPayable:"Tài khoản công nợ phải trả",
+  accountReceivable:"Tài khoản công nợ phải thu",
+  accountNumber:"Số tài khoản",
+  accountName:"Tên tài khoản"
+}
 const TEXT = {
   employee: "Nhân viên",
+  provider:"Danh sách nhà cung cấp",
   insertEmployee: "Thêm mới nhân viên",
+  detailEmployee:"Thông tin chi tiết nhân viên",
+  duplicateEmployee:"Nhân bản nhân viên",
+  confirmDelete:"Xác nhận xóa?",
   store: "Cất",
-  storeAndAdd: "Cất và thêm",
+  storeAndAdd: "Cất và Thêm",
   cancel: "Hủy",
   no: "Không",
   yes: "Có",
@@ -35,6 +76,9 @@ const TEXT = {
   prev: "Trước",
   next: "Sau",
   update: "Sửa",
+  code:"Mã",
+  name:"Tên",
+  
   otherAction: "Hành động khác",
   duplicate: "Nhân bản",
   delete: "Xóa",
@@ -42,7 +86,8 @@ const TEXT = {
   addFormTitle: "Thêm khách hàng",
   modifyFormTitle: "Sửa khách hàng",
   refreshToolTip: "Tải lại dữ liệu",
-  exportToolTip: "Xuất danh sách nhân viên ra file file",
+  exportToolTip: "Xuất danh sách nhân viên ra file excel",
+  exportProviderListToolTip:"Xuất danh sách nhà cung cấp ra file excel",
   total: "Tổng",
   record:"bản ghi",
   numberRecordPerPage: "Số bản ghi/trang",
@@ -55,7 +100,38 @@ const TEXT = {
   batchAction: "Thực hiện hàng loạt",
   function: "Chức năng",
   success: "Thành công!",
-  nameCompany:"CÔNG TY TNHH SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ QUI PHÚC"
+  nameCompany:"CÔNG TY TNHH SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ QUI PHÚC",
+  insertProvider:"Thêm mới nhà cung cấp",
+  detailProvider:"Chi tiết nhà cung cấp",
+  contact:"Người liên hệ",
+  title:"Xưng hô",
+  fullName:"Họ và tên",
+  phoneNumber:"Số điện thoại",
+  landPhone:"Điện thoại cố định",
+  legalRepresentative:"Đại diện theo pháp luật",
+  payWithinDays:"Số ngày được nợ",
+  maxDebtAllowed:"Số nợ tối đa",
+  location:"Vị trí địa lý",
+  province:"Tỉnh/Thành phố",
+  district:"Quận/Huyện",
+  village:"Xã/Phường",
+  deliveryAddress:"Địa chỉ giao hàng",
+  SameAsProviderAddress:"Giống địa chỉ nhà cung cấp",
+  contactInformation:"Thông tin liên hệ",
+  personalIDInformation:"Thông tin CMND/Thẻ căn cước",
+  personalIDInformationTooltip:"Thông tin chứng minh nhân dân/Thẻ căn cước",
+  emailInvoice:"Email, ngăn cách nhiều email bởi dấu chấm phẩy \";\" ",
+  eInvoiceRecipient:"Người nhận hóa đơn điện tử",
+  type:"Loại",
+  group:"Nhóm",
+  liabilityStatus:"Tình trạng nợ công",
+  status:"Trạng thái",
+  reset:"Đặt lại",
+  filter:"Lọc",
+  AddProviderGroup:"Thêm nhóm khách hàng, nhà cung cấp",
+  addPaymentTerm:"Thêm điều khoản thanh toán",
+  
+
 }
 const NAVBAR_ITEM={
   overView :"Tổng quan",
@@ -71,11 +147,28 @@ const NAVBAR_ITEM={
   synthetic:"Tổng hợp",
   financialAnalysis:"Phân tích tài chính"
 }
+const MESSAGE_ALERT={
+  alertTitle:"Cảnh báo!",
+  insertSuccessful:"Thêm nhân viên thành công.",
+  updateSuccessful:"Sửa nhân viên thành công.",
+  insertProviderSuccessful:"Thêm nhà cung cấp thành công.",
+  updateProviderSuccessful:"Sửa nhà cung cấp thành công.",
+  deleteSuccessful:"Xóa thành công.",
+  errorInsert:"Có lỗi!. Không thể thêm mới bản ghi",
+  errorUpdate:"Có lỗi!. Không thể cập nhật bản ghi",
+  insertProviderGroupSuccessful:"Thêm mới nhóm nhà cung cấp thành công.",
+  insertPaymentTermSuccessful:"Thêm mới điều khoản thanh toán thành công",
+}
 
 
 const resourceVN = {
   PROPERTY_NAME,
   TEXT,
-  NAVBAR_ITEM
+  NAVBAR_ITEM,
+  MESSAGE_ALERT,
+  PROPERTY_NAME_OF_PROVIDER,
+  TERM_OF_PAYMENT,
+  ACCOUNT_PAYABLE,
+  PROVIDER_GROUP
 }
 export default resourceVN

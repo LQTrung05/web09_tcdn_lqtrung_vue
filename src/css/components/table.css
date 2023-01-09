@@ -1,20 +1,24 @@
 
-.wrap-table {
+.wrap-table-primary {
     overflow: auto;
     border-radius: 4px;
-    height: calc( 100vh - 56px - 56px - 168px);
-
+    height: calc( 100vh - 156px  - 56px - 168px);
+}
+.wrap-table-secondary {
+    overflow: auto;
+    border-radius: 4px;
+    height: calc( 100vh - 56px  - 56px - 168px);
 }
 .m-table{
     border-spacing: 0;
 }
 thead .m-table tr{
-    background-color: #ccc;
+    background-color: #babec5;
 }
 .m-table td, .m-table th {
     width: 100%;
-    border-top: 1px solid #ccc;
-    /* border-left: 1px solid #ccc; */
+    border-top: 1px solid #babec5;
+    border-left: 1px solid #babec5;
     /* border-bottom: 1px solid #ccc; */
 
 }
@@ -47,9 +51,6 @@ thead .m-table tr{
 .m-table tbody tr:hover td{
     background-color: #F8F8F8;
 }
-/* .m-table tbody tr:focus-within td{
-    background-color: #F1FFEF;
-} */
 .m-table .text-align-left {
     text-align: left;
 }
@@ -62,24 +63,29 @@ thead .m-table tr{
     text-align: center;
 }
 
-th:first-child{
+.m-table th:first-child{
     z-index:5 !important;
+    background-color: #eeeeee;
 }
-th:last-child{
+.m-table th:last-child{
     z-index: 10000 !important;
 }
-th:first-child, td:first-child {
+.m-table th:first-child,.m-table td:first-child {
     position:sticky;
     left:0;
+    border-right: 1px solid #babec5;
+}
+.m-table td:first-child {
     background-color: #fff;
 
 }
-th:last-child, td:last-child{
+.m-table th:last-child,.m-table td:last-child{
     position:sticky;
     right:0;
+    border-right: 1px solid #babec5;
+}
+.m-table td:last-child{
     background-color: #fff;
-    border-right: 1px solid #ccc;
-
 }
 
 .show-contexMenu {
@@ -128,4 +134,22 @@ th:last-child, td:last-child{
     padding-right: 4px;
     border-radius: 16px;
     border: 2px solid #000;
+}
+/* css cho table nằm trong combobox */
+.m-combobox-table {
+    border-spacing: unset;
+    width: 100%;
+}
+.m-combobox-table th,
+.m-combobox-table td{
+    padding: 0 10px;
+    height: 32px;
+    text-align: left;
+}
+.m-combobox-table th{
+    background-color: #f1f1f1;
+}
+.m-combobox-table tbody tr:hover{
+    color: #2ca01c;
+    background-color: #babec5;
 }

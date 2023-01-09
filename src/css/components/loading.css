@@ -5,7 +5,7 @@
   background-color: rgba(204, 204, 204, 0.322);
   top: 0;
   left: 0;
-  z-index: 10000;
+  z-index: 100000;
 }
 .img-loading{
   position: absolute;

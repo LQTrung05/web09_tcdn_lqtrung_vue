@@ -4,7 +4,7 @@
     padding: 0 12px;
     border-radius: 4px;
     outline: unset;
-    border: 1px solid #ccc;
+    border: 1px solid #babec5;
 }
 .input:hover{
     outline: 1px solid #e2e2e2;
@@ -19,12 +19,14 @@
 .m-input-form{
     padding-left: 12px;
     padding-right: 8px;
-    border-radius: 4px;
-    height: 36px;
-    border: 1px solid #babec5;  
+    border-radius: 2px;
+    height: 32px;
+    border: 1px solid #babec5;
     box-sizing: border-box;
-    outline: none;
+    outline: unset;
     width: -webkit-fill-available;
+    text-overflow: ellipsis;
+    position: relative;
 }
 .m-border-input{
     border: none;
@@ -37,7 +39,7 @@
 
 }
 .m-border-input:focus{
-    outline: 1px solid #409330;
+    border: 1px solid #409330;
 }
 
 .m-icon-require {
@@ -45,33 +47,63 @@
     align-self: center;
 }
 .m-input-form:hover {
-    outline: 1px solid #e2e2e2;
+    outline: 0.5px solid #e2e2e2;
 }
 
 .m-input-form:focus {
-    outline: 1px solid #409330;
+    border: 0.5px solid #50B83C;
 }
 .m-input-form-error{
     outline: 1px solid #E61D1D;
 }
-.m-input-form-40 {
-    width: 40%!important;
+.m-input-textarea{
+    resize: none;
+    padding: 12px;
+    border-radius: 2px;
+    border: 1px solid #babec5;
+    box-sizing: border-box;
+    outline: none;
+    width: -webkit-fill-available;
+}
+.m-input-textarea:hover {
+    outline: 1px solid #e2e2e2;
+}
+.m-input-textarea:focus {
+    outline: 1px solid #50B83C;
+}
+.m-input-width-30{
+    width: 30% !important;
 }
 
-.m-input-form-60 {
+.m-input-width-40 {
+    width: 40%!important;
+}
+.m-input-width-45 {
+    width: 45%!important;
+}
+
+.m-input-width-50 {
+    width: 50%!important;
+}
+
+.m-input-width-60 {
     width: 60%!important;
+}
+.m-input-width-70{
+    width: 70% !important;
 }
 m-input-form-33{
     width: 33,33%!important;
 }
 
-.m-input-form-100 {
+.m-input-width-100 {
     width: 100%!important;
 }
 input[type=radio] {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     accent-color: #409330 ;
+    margin: 0 6px 0 0;
 }
 input[type=checkbox]{
     accent-color: #409330 ;
@@ -81,7 +113,4 @@ input[type=checkbox]{
 .input--error{
     border:1px solid #E61D1D;
 }
-/* input.required.m-input-form-error+div.err-message{
-    display: block;
-} */
 

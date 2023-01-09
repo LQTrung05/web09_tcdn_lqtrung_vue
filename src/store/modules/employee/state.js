@@ -6,19 +6,10 @@ export default {
   employees: [],
   //Thông tin chi tiết 1 nhân viên
   employee: {},
-  isShowForm: false,
-  isShowSuccessNotice: false,
-  isShowProgress: false,
-  isShowAlert: false,
+  
   titleForm: "",
-  titleNotice: "",
   formMode: formMode.insert,
   noticeAction: noticeAction.deleteAEmployee,
-  //Kiểu và nội dung của cảnh báo
-  alert: {
-    type: "",
-    message: ""
-  },
   //Dữ liệu tìm kiếm và phân trang
   filter: {
     pageSize: 10,

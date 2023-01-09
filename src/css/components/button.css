@@ -1,12 +1,29 @@
 .m-button{
-    height: 36px;
     border-radius: 4px;
-    min-width: 80px;
     border: none;
     padding: 0 16px;
-    color: #fff;
-    background-color: #50B83C;
     font-family: notosans-simidbold;
+}
+.ms-button-primary{
+    min-width: 80px;
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #2ca01c;
+}
+.ms-button-primary:hover {
+    background-color: #35bf22;
+    color: #fff;
+} 
+
+.ms-button-secondary{
+    min-width:unset !important;
+    color: #000;
+    background-color: unset;
+}
+.ms-button-secondary:hover{
+    background-color: #d2d3d6 !important;
+    color: #000;
+
 }
 .m-button:hover:not([disabled]){
     background-color: #73C663;

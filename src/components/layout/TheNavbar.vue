@@ -2,8 +2,8 @@
   <div class="navbar">
         <div class="nav-logo">
             <div class="sibar"></div>
-            <img class="m-logo-icon" src="../../assets/img/Logo_Module_TiengViet_White.66947422.svg" alt="">
-            <!-- <img class="m-logo-icon" src= alt=""> -->
+            <img class="m-logo-icon" src="../../assets/img/Logo_Module_TiengViet_White.66947422.svg" alt=""
+            @click="backProcessPage">
         </div>
         <div class="nav-item">
             <a href="" class="m-item-navbar">
@@ -12,10 +12,10 @@
             </a>
         </div>
         <div class="nav-item">
-            <a href="" class="m-item-navbar">
+            <router-link class="m-item-navbar" :to="{name: 'home'}">
                 <div class="m-item-icon m-icon-24 m-icon-cash"></div>
                 <div class="cl-white">{{navbarItem.cash}}</div>
-            </a>
+            </router-link>
         </div>
         <div class="nav-item">
             <a href="" class="m-item-navbar">
@@ -88,7 +88,9 @@ export default {
   components:"",
   props:[],
   methods: {
-    
+    backProcessPage(){
+        this.$router.push({ name: 'home'})
+    }
   },
   data() {
     return {
@@ -101,5 +103,7 @@ export default {
 </script>
 <style scoped>
   @import url("../../css/layout/navbar.css");
-  
+  .m-logo-icon:hover{
+    cursor: pointer;
+  }
 </style>

@@ -3,7 +3,6 @@
     <the-header></the-header>
     <the-navbar></the-navbar>
     <the-body></the-body>
-    
   </div>
 </template>
 

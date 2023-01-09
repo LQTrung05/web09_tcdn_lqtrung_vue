@@ -25,27 +25,82 @@
     background-image: url(../../assets/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
 }
+
 .m-icon-32 {
     width: 32px;
     height: 32px;
     background-image: url(../../assets/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
 }
+
 .m-icon-48 {
     width: 48px;
     height: 48px;
     background-image: url(../../assets/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
 }
-.m-icon-success-32{
+
+.mi-16 {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+}
+.mi-24 {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+.mi {
+    background-image: url(../../assets/img/Sprites.c71aae0c.svg);
+    background-repeat: no-repeat;
+}
+.mi-tour {
+    background-position: -984px -144px;
+}
+.mi-chevron-left--primary {
+    background-position: -224px -360px;
+}
+.mi-process-customer {
+    background-position: -872px -200px;
+}
+.mi-close--small {
+    background-position: -80px -312px;
+}
+.mi-process-provider {
+    background-position: -928px -200px;
+}
+.mi-arrow-check-all {
+    background-position: -256px -143px;
+}
+.mi-process-employee {
+    background-position: -984px -200px;
+}
+
+.mi-calculate {
+    background-position: -1376px -256px;
+}
+
+.mi-setting--active {
+    background-position: -648px -200px;
+}
+.mi-delete {
+    background-position: -464px -312px;
+}
+
+.m-icon-success-32 {
     background-position: -96px -962px;
 }
+
 .m-icon-dashboard {
     background-position: -30px -1628px;
 }
-.m-icon-excel{
+
+.m-icon-excel {
     background-position: -705px -258px;
 }
+
 .m-icon-cash {
     background-position: -73px -1628px;
 }
@@ -123,7 +178,7 @@
 }
 
 .m-icon-refresh:hover {
-    background-position: -1097px -88px  ;
+    background-position: -1097px -88px;
 }
 
 .m-icon-search {
@@ -141,7 +196,9 @@
 .m-icon-arrow-dropdown {
     background-position: -560px -359px;
 }
-
+.m-icon-plus{
+    background-position: -32px -312px;
+}
 .m-icon-help {
     background-position: -89px -144px;
 }
@@ -149,9 +206,11 @@
 .m-icon-close {
     background-position: -144px -144px;
     cursor: pointer;
+    margin-left: 8px;
 }
-.m-icon-close-notice{
-    background-position:-1176px -360px;
+
+.m-icon-close-notice {
+    background-position: -1176px -360px;
     cursor: pointer;
 }
 
@@ -170,10 +229,12 @@
 .m-icon-success {
     background-position: -984px -456px;
 }
-.m-icon-arrow-right{
-    background-position: -84px -361px ;
+
+.m-icon-arrow-right {
+    background-position: -84px -361px;
 }
-.m-icon-arrow-left{
+
+.m-icon-arrow-left {
     background-position: -36px -361px;
 }
 
@@ -183,12 +244,14 @@
     height: 100%;
     animation: rotate 1s ease infinite;
 }
-.m-icon-excel{
+
+.m-icon-excel {
     margin-left: 12px;
     margin-top: 4px;
-}
-.m-icon-excel:hover{
-    cursor: pointer;
-    opacity: 60%;
+    opacity: 50%;
 }
 
+.m-icon-excel:hover {
+    cursor: pointer;
+    opacity: 100%;
+}

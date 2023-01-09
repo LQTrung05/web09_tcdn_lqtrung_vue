@@ -1,14 +1,14 @@
 .header{
     /* position: fixed; */
     display: flex;
-    height: 56px;
-    width: calc(100% - 200px);
+    height: 48px;
+    width: calc(100% - 178px);
     background-color: #fff;
     justify-content: space-between;
     align-items: center;
-    margin-left: 200px;
+    margin-left: 178px;
     right: 0;
-    left: 200px;
+    left: 178px;
     top: 0;
     z-index: 1;
 }

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import state from './state'
-import formMode from '../enums/formMode'
-import Gender from '../enums/gender'
+import formMode from '../../../enums/formMode'
+import Gender from '../../../enums/gender'
+import resourceVN from '@/resource/resourceVN'
 export default {
 
   /**
@@ -15,8 +16,9 @@ export default {
         .then(response => context.commit('getEmployees', response.data))
     } catch (error) {
       console.log(error);
-    }
+    } 
   },
+  
   /**
    * Hàm lấy mã nhân viên mới phục vụ chức năng thêm mới nhân viên
    * @param {*} context 
@@ -30,6 +32,7 @@ export default {
       console.log(error);
     }
   },
+
   /**
      * Hàm thêm mới nhân viên
      * @param {object} nhân viên được thêm mới
@@ -39,9 +42,10 @@ export default {
     try {
       axios
         .post("http://localhost:8080/api/v1/Employees", state.employee)
-        .then(() => {
+        .then((response) => {
           context.dispatch("toggleProgressLoading");
           //Load lại dữ liệu
+          context.dispatch("getPurchasingStaff",response.data);
           context.dispatch("getEmployees");
           if (state.formMode == formMode.insert) {
             //Đóng form
@@ -61,7 +65,7 @@ export default {
             context.dispatch("setDetailEmployee", { Gender: Gender.male });
             context.dispatch("getNewEmployeeCode");
           }
-          context.dispatch("setTitleNotice", "Thêm nhân viên thành công");
+          context.dispatch("setTitleNotice", resourceVN.MESSAGE_ALERT.insertSuccessful);
           setTimeout(() => {
             context.dispatch("closeNotice");
           }, 5000);
@@ -69,6 +73,7 @@ export default {
         .catch((res) => {
           console.log(res),
             this.alert = {
+              title: resourceVN.MESSAGE_ALERT.alertTitle,
               type: "danger",
               message: res.response.data.Data[0],
             };
@@ -112,13 +117,14 @@ export default {
             context.dispatch("getNewEmployeeCode");
 
           }
-          context.dispatch("setTitleNotice", "Sửa nhân viên thành công");
+          context.dispatch("setTitleNotice", resourceVN.MESSAGE_ALERT.updateSuccessful);
           setTimeout(() => {
             context.dispatch("closeNotice");
           }, 5000);
         })
         .catch((res) => {
           this.alert = {
+            title: resourceVN.MESSAGE_ALERT.alertTitle,
             type: "danger",
             message: res.response.data.Data[0],
           };
@@ -146,7 +152,7 @@ export default {
           context.dispatch("toggleProgressLoading");
           //Load lại dữ liệu
           context.dispatch("getEmployees");
-          context.dispatch("setTitleNotice", "Xóa thành công");
+          context.dispatch("setTitleNotice", resourceVN.MESSAGE_ALERT.deleteSuccessful);
           setTimeout(() => {
             context.dispatch("toggleProgressLoading");
             //Bật thông báo xóa thành công
@@ -170,6 +176,7 @@ export default {
         })
         .catch((res) => {
           this.alert = {
+            title: resourceVN.MESSAGE_ALERT.alertTitle,
             type: "danger",
             message: res.response.data.Data[0],
           };
@@ -198,7 +205,7 @@ export default {
           context.dispatch("toggleProgressLoading");
           //Load lại dữ liệu
           context.dispatch("getEmployees");
-          context.dispatch("setTitleNotice", "Xóa thành công");
+          context.dispatch("setTitleNotice", resourceVN.MESSAGE_ALERT.deleteSuccessful);
           setTimeout(() => {
             context.dispatch("toggleProgressLoading");
             //Bật thông báo xóa thành công
@@ -219,12 +226,23 @@ export default {
           context.dispatch("getEmployees")
           //Cập nhật lại bản ghi cuối cùng của paging
           context.dispatch("setLastRecord")
-          context.dispatch("setCheckAllEmployee",false);
-          context.dispatch("setListDeleteEmployee",[]);
+          context.dispatch("setCheckAllEmployee", false);
+          context.dispatch("setListDeleteEmployee", []);
+        })
+        .catch((res) => {
+          context.dispatch("toggleAlert");
+          this.alert = {
+            title: resourceVN.MESSAGE_ALERT.alertTitle,
+            type: "danger",
+            message: res.response.data.UsersMsg,
+          };
+          context.dispatch("setAlert", this.alert);
+          context.dispatch("toggleAlert");
         });
 
     } catch (error) {
       this.alert = {
+        title: resourceVN.MESSAGE_ALERT.alertTitle,
         type: "danger",
         message: error.response.UsersMsg,
       };
@@ -250,7 +268,7 @@ export default {
           );
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "file.xlsx");
+          link.setAttribute("download", "Danh_sach_nhan_vien.xlsx");
           document.body.appendChild(link);
           link.click();
         });
@@ -261,25 +279,14 @@ export default {
     }
   },
 
-  toggleForm(context) {
-    context.commit('toggleForm');
-  },
   toggleNoticeMessage(context) {
     context.commit('toggleNoticeMessage')
   },
-  toggleProgressLoading(context) {
-    context.commit('toggleProgressLoading')
-  },
-  toggleAlert(context) {
-    context.commit("toggleAlert");
-  },
+ 
   setTitleForm(context, title) {
     context.commit("setTitleForm", title);
   },
-  //Gán tiêu đề thêm, sửa, xóa thành công sau khi thực hiện thêm, sửa, xóa thành công
-  setTitleNotice(context, title) {
-    context.commit("setTitleNotice", title);
-  },
+  
   //Thay đổi thông tin chi tiết 1 nhân viên
   setDetailEmployee(context, employee) {
     context.commit("setDetailEmployee", employee);
@@ -289,9 +296,6 @@ export default {
   },
   setNoticeAction(context, noticeAction) {
     context.commit("setNoticeAction", noticeAction);
-  },
-  setAlert(context, alert) {
-    context.commit("setAlert", alert);
   },
   setFilter(context, filter) {
     context.commit("setFilter", filter);
@@ -305,12 +309,7 @@ export default {
   setCheckAllEmployee(context, value) {
     context.commit("setCheckAllEmployee", value);
   },
-  openNotice(context) {
-    context.commit("openNotice");
-  },
-  closeNotice(context) {
-    context.commit("closeNotice");
-  },
+ 
   listIDEmployeeSelected(context, listID) {
     context.commit("listIDEmployeeSelected", listID);
   },

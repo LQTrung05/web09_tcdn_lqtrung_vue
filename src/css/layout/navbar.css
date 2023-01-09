@@ -1,5 +1,5 @@
 .navbar{
-    width:200px;
+    width:178px;
     flex-shrink: 0;
     height: 100vh;
     background-color: #393a3d;
@@ -11,8 +11,7 @@
 .navbar .sibar{
     width: 24px;
     height: 24px;
-    margin-right:10px ;
-    margin-left:16px;
+    margin-right:10px;
     /* Thêm icon vào bằng dòng lệnh sau */
     background: url(../../assets/img/Sprites.64af8f61.svg) no-repeat -424px -86px;
 
@@ -34,5 +33,5 @@
     position: relative;
 }
 .m-item-icon{
-    margin:0 12px;
+    margin-right: 12px;
 }
